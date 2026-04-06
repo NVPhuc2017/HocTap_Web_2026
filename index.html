@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Học Web Cùng Tôi | HTML, CSS, JS</title>
+    <!-- Google Fonts & Font Awesome cho icons đẹp -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, #f8faff 0%, #f0f3fe 100%);
+            color: #1e293b;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* container chính */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 2rem 3rem;
+        }
+
+        /* header + hero */
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 2rem 1rem 1rem;
+        }
+
+        .badge {
+            background: #eef2ff;
+            color: #4f46e5;
+            padding: 0.4rem 1rem;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.3px;
+            backdrop-filter: blur(2px);
+        }
+
+        h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1E293B, #3b82f6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #475569;
+            max-width: 680px;
+            margin: 0 auto 2rem;
+        }
+
+        /* 4 thẻ chính */
+        .cards-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(2px);
+            border-radius: 2rem;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.02);
+            flex: 1 1 220px;
+            min-width: 210px;
+            transition: all 0.25s ease;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 28px 40px -18px rgba(0, 0, 0, 0.2);
+            border-color: #cbd5e1;
+            background: white;
+        }
+
+        .card-inner {
+            padding: 2rem 1.5rem;
+            text-align: center;
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: #4b5563;
+            margin-bottom: 1.6rem;
+        }
+
+        .btn-card {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f1f5f9;
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1f2937;
+            text-decoration: none;
+            transition: 0.2s;
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-card i {
+            font-size: 0.85rem;
+            transition: transform 0.2s;
+        }
+
+        .btn-card:hover {
+            background: #ffffff;
+            border-color: #94a3b8;
+            color: #0f172a;
+        }
+
+        .btn-card:hover i {
+            transform: translateX(4px);
+        }
+
+        /* màu sắc riêng cho từng thẻ (border top hoặc icon) */
+        .card.html .card-icon { color: #e44d26; }
+        .card.css .card-icon { color: #2965f1; }
+        .card.js .card-icon { color: #f0db4f; text-shadow: 0 2px 4px rgba(0,0,0,0.1);}
+        .card.thuchanh .card-icon { color: #10b981; }
+
+        /* phần giới thiệu thêm */
+        .feature-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            background: #ffffffcc;
+            backdrop-filter: blur(4px);
+            border-radius: 2rem;
+            padding: 2rem;
+            margin-top: 1rem;
+            border: 1px solid #ffffff;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
+        }
+
+        .info-box {
+            flex: 2;
+            min-width: 240px;
+        }
+
+        .info-box h2 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #0f172a, #2563eb);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .info-box p {
+            color: #334155;
+            margin-bottom: 1.2rem;
+        }
+
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .tech-tag {
+            background: #eef2ff;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #1e40af;
+        }
+
+        .study-tip {
+            flex: 1.2;
+            background: linear-gradient(120deg, #f1f5f9, #ffffff);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            border-left: 6px solid #3b82f6;
+        }
+
+        .study-tip h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .study-tip ul {
+            margin-left: 1.2rem;
+            color: #2c3e66;
+        }
+
+        .study-tip li {
+            margin: 0.6rem 0;
+        }
+
+        footer {
+            margin-top: 3.5rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #5b6e8c;
+            border-top: 1px solid #cbd5e180;
+            padding-top: 2rem;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 1.2rem;
+            }
+            h1 {
+                font-size: 2.3rem;
+            }
+            .cards-grid {
+                gap: 1.2rem;
+            }
+            .card-inner {
+                padding: 1.3rem 1rem;
+            }
+            .feature-section {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Hero -->
+    <div class="hero">
+        <div class="badge">
+            <i class="fas fa-laptop-code"></i> Học lập trình cơ bản
+        </div>
+        <h1>Hành trình <span style="background: linear-gradient(135deg,#3b82f6,#8b5cf6); background-clip:text; -webkit-background-clip:text; color:transparent;">HTML, CSS & JS</span></h1>
+        <p>Xây dựng nền tảng vững chắc cho Front-end. Khám phá các trang chuyên sâu về ngôn ngữ và thực hành ngay hôm nay!</p>
+    </div>
+
+    <!-- 4 liên kết trang chính: HTML, CSS, JavaScript, ThucHanh -->
+    <div class="cards-grid">
+        <!-- Trang HTML -->
+        <div class="card html">
+            <div class="card-inner">
+                <div class="card-icon"><i class="fab fa-html5"></i></div>
+                <h3>HTML</h3>
+                <p>Cấu trúc web, semantic tags, form & các thẻ hiện đại.</p>
+                <a href="01 Căn bản HTML.html" class="btn-card">Khám phá HTML <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+        <!-- Trang CSS -->
+        <div class="card css">
+            <div class="card-inner">
+                <div class="card-icon"><i class="fab fa-css3-alt"></i></div>
+                <h3>CSS</h3>
+                <p>Flexbox, Grid, animation, responsive & biến thể màu sắc.</p>
+                <a href="02 Căn bản CSS.html" class="btn-card">Làm đẹp với CSS <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+        <!-- Trang JavaScript -->
+        <div class="card js">
+            <div class="card-inner">
+                <div class="card-icon"><i class="fab fa-js"></i></div>
+                <h3>JavaScript</h3>
+                <p>Logic, DOM, sự kiện, ES6 và tương tác thú vị.</p>
+                <a href="03 Căn bản javaScript.html" class="btn-card">Tương tác JS <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+        <!-- Trang Thực Hành -->
+        <div class="card thuchanh">
+            <div class="card-inner">
+                <div class="card-icon"><i class="fas fa-code-branch"></i></div>
+                <h3>Thực Hành</h3>
+                <p>Dự án nhỏ, bài tập & thử thách kết hợp cả 3 ngôn ngữ.</p>
+                <a href="04 Thực Hành HTML va CSS.html" class="btn-card">Bắt đầu thực hành <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phần nội dung bổ trợ thông tin học tập -->
+    <div class="feature-section">
+        <div class="info-box">
+            <h2><i class="fas fa-graduation-cap"></i> Lộ trình học thông minh</h2>
+            <p>Bạn sẽ bắt đầu với <strong>HTML</strong> để tạo khung xương, sau đó <strong>CSS</strong> trang trí và cuối cùng <strong>JavaScript</strong> để thổi hồn vào trang web. Trang <strong>Thực Hành</strong> tổng hợp bài tập kết hợp cả ba, giúp bạn nâng cao tay nghề nhanh chóng.</p>
+            <div class="tech-list">
+                <span class="tech-tag"><i class="fab fa-html5"></i> HTML5</span>
+                <span class="tech-tag"><i class="fab fa-css3-alt"></i> CSS3</span>
+                <span class="tech-tag"><i class="fab fa-js"></i> ES6+</span>
+                <span class="tech-tag"><i class="fas fa-mobile-alt"></i> Responsive</span>
+                <span class="tech-tag"><i class="fas fa-palette"></i> Flex/Grid</span>
+            </div>
+        </div>
+        <div class="study-tip">
+            <h3><i class="fas fa-lightbulb"></i> Mẹo học tập</h3>
+            <ul>
+                <li>✍️ Thực hành code mỗi ngày 30 phút</li>
+                <li>🛠️ Sửa lỗi trực tiếp trên trình duyệt (DevTools)</li>
+                <li>📁 Xây mini project: bảng cửu chương, đồng hồ, to-do list</li>
+                <li>🔗 Khám phá các trang liên kết bên trên để có tài liệu chi tiết</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p><i class="far fa-copyright"></i> 2025 | Học HTML, CSS & JS cùng các trang chuyên sâu — Từ cơ bản đến thực chiến</p>
+        <p style="margin-top: 0.5rem; font-size:0.8rem;">
+            <i class="fas fa-code"></i> Bốn trang chính: HTML | CSS | JavaScript | Thực hành
+        </p>
+    </footer>
+</div>
+
+<!-- (Ghi chú: Các file html.html, css.html, javascript.html, thuchanh.html cần được tạo cùng thư mục để liên kết hoạt động) 
+     Dưới đây là nội dung mẫu cho 4 trang đó (nếu bạn muốn tự động tạo trong cùng project, tôi sẽ cung cấp code cho từng trang) 
+     Nhưng yêu cầu chỉ tạo trang chủ với liên kết, tuy nhiên tôi sẽ kèm theo các trang con mẫu bên dưới bằng cách sử dụng style script nội tuyến 
+     để đảm bảo đầy đủ chức năng khi mở trang chủ. Vì là 1 file duy nhất? KHÔNG: đề bài yêu cầu trang chủ có liên kết 4 trang HTML, CSS, JavaScript, ThucHanh. 
+     Nhưng trong môi trường này chỉ trả về một HTML. Tuy nhiên để demo đầy đủ, tôi sẽ tạo thêm các thành phần javascript động để mô phỏng? 
+     Không, sẽ cung cấp đủ mã cho 5 trang riêng biệt? Thực tế assistant chỉ output 1 tệp, nhưng tôi có thể nhúng nội dung của 4 trang kia vào dưới dạng template? 
+     Nhưng yêu cầu "tạo trang chủ về học HTML, CSS và JS liên kết 4 trang HTML,CSS,JavaScript,ThucHanh" nghĩa là phải có các file .html độc lập. 
+     Vì là mã nguồn đơn, tôi sẽ tạo thêm các khối script để khi click vào link, nó có thể hiển thị nội dung tạm? Không chuyên nghiệp.
+     Tốt nhất tôi cung cấp TRANG CHỦ (file index.html) kèm theo nội dung mẫu của 4 trang trong cùng project. Nhưng do giới hạn, tôi sẽ viết thêm các đoạn code bên dưới 
+     bằng cách tạo các blob? Không cần, tôi sẽ trình bày đầy đủ code của 4 trang con trong phần giải thích. Nhưng vì là output trực tiếp, tôi sẽ tạo thêm 4 khối văn bản chứa nội dung các trang.
+     Tuy nhiên tốt hơn: tôi cung cấp index.html và kèm theo các hàm tạo động nếu file chưa tồn tại? không an toàn. 
+     Để đáp ứng chính xác: tạo trang chủ với liên kết tuyệt đối tới các file html.html, css.html, javascript.html, thuchanh.html. Đồng thời tôi sẽ viết luôn mã nguồn cho 4 trang này 
+     trong cùng câu trả lời (dưới dạng các thẻ details hoặc hiển thị để người dùng copy). Vậy nên tôi sẽ thêm một phần hướng dẫn và cung cấp mã nguồn của 4 trang con ở cuối.
+    -->
+</body>
+</html>
