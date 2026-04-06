@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Thuyết Trình CSS - Học CSS Toàn Diện</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: #667eea;
+            transition: all 0.3s;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Slides */
+        .slides-container {
+            margin-top: 80px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 2rem;
+        }
+
+        .slide {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+            border-left: 5px solid #667eea;
+            padding-left: 1rem;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: #764ba2;
+            margin: 1.5rem 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h3 {
+            color: #667eea;
+            margin: 1rem 0;
+            font-size: 1.2rem;
+        }
+
+        .section-badge {
+            background: #667eea;
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1rem;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .demo-box {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            border: 1px solid #e9ecef;
+        }
+
+        /* Practice Questions */
+        .practice-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-left: 5px solid #667eea;
+            padding: 1.5rem;
+            margin: 2rem 0 1rem 0;
+            border-radius: 10px;
+        }
+
+        .practice-section h3 {
+            color: #667eea;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .question {
+            background: white;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .question:hover {
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .question p {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .answer-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .answer-btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        .answer {
+            display: none;
+            margin-top: 0.8rem;
+            padding: 0.8rem;
+            background: #e8f0fe;
+            border-radius: 5px;
+            color: #2c3e50;
+            font-size: 0.9rem;
+            border-left: 3px solid #667eea;
+        }
+
+        .answer.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Box Model Demo */
+        .box-model-visual {
+            background: #fff;
+            padding: 20px;
+            margin: 20px auto;
+            border: 3px solid #667eea;
+            position: relative;
+        }
+
+        .margin-area {
+            background: #ffe6e6;
+            padding: 15px;
+            border: 2px dashed #ff9999;
+        }
+
+        .border-area {
+            background: #e6ffe6;
+            padding: 15px;
+            border: 2px dashed #99ff99;
+        }
+
+        .padding-area {
+            background: #e6e6ff;
+            padding: 15px;
+            border: 2px dashed #9999ff;
+        }
+
+        .content-area {
+            background: #764ba2;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Interactive Box Model */
+        .interactive-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .box-element {
+            background: #667eea;
+            color: white;
+            text-align: center;
+            transition: all 0.3s;
+            margin: 0 auto;
+        }
+
+        .control-group {
+            margin: 1rem 0;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .control-group label {
+            font-weight: bold;
+            min-width: 80px;
+        }
+
+        .control-group input {
+            padding: 0.3rem;
+            width: 100px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .control-group span {
+            background: #667eea;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 5px;
+            font-size: 0.85rem;
+        }
+
+        /* Flexbox Demo */
+        .flex-container {
+            display: flex;
+            background: #f0f0f0;
+            padding: 20px;
+            gap: 10px;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .flex-item {
+            background: #667eea;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+            flex: 1;
+            min-width: 80px;
+        }
+
+        /* Grid Demo */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            background: #f0f0f0;
+            padding: 20px;
+            margin: 1rem 0;
+        }
+
+        .grid-item {
+            background: #764ba2;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        /* Card Demo */
+        .card {
+            width: 250px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 1rem auto;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .card-content {
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+
+        /* Text styling demo */
+        .text-demo-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .text-controls {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .text-controls button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+        }
+
+        .text-controls button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        /* Formatting demo */
+        .formatting-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .format-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .format-card h3 {
+            margin-top: 0;
+            border-bottom: 2px solid #667eea;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        .demo-element {
+            margin: 1rem 0;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 1.6rem;
+            }
+            
+            h2 {
+                font-size: 1.3rem;
+            }
+            
+            .nav-container {
+                gap: 0.4rem;
+            }
+            
+            .nav-btn {
+                font-size: 0.7rem;
+                padding: 0.3rem 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <div class="nav-container">
+            <button class="nav-btn active" onclick="showSlide(0)">1. Giới thiệu</button>
+            <button class="nav-btn" onclick="showSlide(1)">2. Cú pháp</button>
+            <button class="nav-btn" onclick="showSlide(2)">3. Định dạng</button>
+            <button class="nav-btn" onclick="showSlide(3)">4. Box Model</button>
+            <button class="nav-btn" onclick="showSlide(4)">5. Flexbox</button>
+            <button class="nav-btn" onclick="showSlide(5)">6. Grid</button>
+            <button class="nav-btn" onclick="showSlide(6)">7. Responsive</button>
+            <button class="nav-btn" onclick="showSlide(7)">8. Hiệu ứng</button>
+            <button class="nav-btn" onclick="showSlide(8)">9. Demo</button>
+        </div>
+    </div>
+
+    <div class="slides-container">
+        <!-- Slide 1: Giới thiệu -->
+        <div class="slide active" id="slide0">
+            <h1>🎨 CSS - Cascading Style Sheets</h1>
+            
+            <div class="section-badge">📖 LÝ THUYẾT</div>
+            <p><strong>CSS là gì?</strong> Ngôn ngữ định dạng giao diện web, giúp trang web trở nên đẹp mắt và chuyên nghiệp.</p>
+            
+            <h2>📌 Vai trò của CSS:</h2>
+            <ul style="margin-left: 2rem;">
+                <li>✓ Tách biệt nội dung (HTML) và hình thức (CSS)</li>
+                <li>✓ Tạo bố cục, màu sắc, font chữ, hiệu ứng</li>
+                <li>✓ Thiết kế responsive trên mọi thiết bị</li>
+                <li>✓ Tối ưu trải nghiệm người dùng</li>
+            </ul>
+            
+            <div class="section-badge">🎮 DEMO TƯƠNG TÁC</div>
+            <div class="demo-box">
+                <h3>Ví dụ: Trước và sau khi có CSS</h3>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <div style="background: #ddd; padding: 1rem; border-radius: 10px;">
+                        <p>❌ Không CSS</p>
+                        <p>Text đơn giản</p>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 1rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                        <p>✅ Có CSS</p>
+                        <p>Text đẹp, gradient, shadow</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="practice-section">
+                <h3>📝 BÀI TẬP THỰC HÀNH</h3>
+                <div class="question">
+                    <p><strong>Câu 1:</strong> CSS viết tắt của từ gì? Ý nghĩa của từng từ?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Cascading Style Sheets - "Cascading" nghĩa là xếp tầng, "Style Sheets" là bảng định dạng.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 2:</strong> Tại sao nên tách riêng CSS khỏi HTML?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Giúp code dễ bảo trì, tái sử dụng, và phân chia công việc rõ ràng giữa front-end developer.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Cú pháp cơ bản -->
+        <div class="slide" id="slide1">
+            <h1>📝 Cú pháp CSS cơ bản</h1>
+            
+            <div class="section-badge">📖 LÝ THUYẾT</div>
+            <div class="code-block">
+                selector {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;property: value;<br>
+                }
+            </div>
+            
+            <div class="code-block">
+                /* Ví dụ cụ thể */<br>
+                h1 {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;color: blue;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;font-size: 24px;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;text-align: center;<br>
+                }
+            </div>
+            
+            <h2>📌 Các cách nhúng CSS:</h2>
+            <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+                <tr style="background: #667eea; color: white;">
+                    <th style="padding: 0.5rem; border: 1px solid #ddd;">Cách</th>
+                    <th style="padding: 0.5rem; border: 1px solid #ddd;">Cú pháp</th>
+                    <th style="padding: 0.5rem; border: 1px solid #ddd;">Ưu điểm</th>
+                </tr>
+                 <tr>
+                    <td style="padding: 0.5rem; border: 1px solid #ddd;">Inline</td>
+                    <td style="padding: 0.5rem; border: 1px solid #ddd;"><code>&lt;h1 style="color: red;"&gt;</code></td>
+                    <td style="padding: 0.5rem; border: 1px solid #ddd;">Dễ test nhanh</td>
+                 </tr>
+                 <tr>
+                    <td style="padding: 0.5rem; border: 1px solid #ddd;">Internal</td>
+                    <td style="padding: 0.5rem; border: 1px solid #ddd;"><code>&lt;style&gt;...&lt;/style&gt;</code></td>
+                    <td style="padding: 0.5rem; border: 1px solid #ddd;">Dùng cho 1 trang</td>
+                 </tr>
+                 <tr>
+                    <td style="padding: 0.5rem; border: 1px solid #ddd;">External</td>
+                    <td style="padding: 0.5rem; border: 1px solid #ddd;"><code>&lt;link rel="stylesheet" href="style.css"&gt;</code></td>
+                    <td style="padding: 0.5rem; border: 1px solid #ddd;">Tái sử dụng, chuyên nghiệp</td>
+                 </tr>
+            </table>
+            
+            <div class="section-badge">🎮 DEMO TƯƠNG TÁC</div>
+            <div class="demo-box">
+                <h3>Thử thay đổi màu sắc:</h3>
+                <div id="syntaxDemo" style="padding: 1rem; background: #f0f0f0; border-radius: 10px;">
+                    <p id="demoText2">Click vào nút để thay đổi màu sắc!</p>
+                </div>
+                <div class="text-controls">
+                    <button onclick="changeDemoColor()">🎨 Đổi màu chữ</button>
+                    <button onclick="changeBgColorDemo()">🌈 Đổi màu nền</button>
+                </div>
+            </div>
+            
+            <div class="practice-section">
+                <h3>📝 BÀI TẬP THỰC HÀNH</h3>
+                <div class="question">
+                    <p><strong>Câu 1:</strong> Có mấy cách để nhúng CSS vào HTML? Kể tên và nêu ưu điểm của từng cách.</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">3 cách: Inline (dễ test), Internal (dùng cho 1 trang), External (tái sử dụng, chuyên nghiệp).</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 2:</strong> Hãy viết cú pháp CSS để đặt màu xanh cho tất cả thẻ &lt;p&gt; và cỡ chữ 18px.</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">p { color: blue; font-size: 18px; }</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 3:</strong> External CSS được liên kết với HTML bằng thẻ gì? Viết cú pháp.</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">&lt;link rel="stylesheet" href="style.css"&gt;</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 4:</strong> Trong cú pháp CSS, "selector" và "property" có vai trò gì?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Selector: chọn phần tử HTML. Property: thuộc tính muốn thay đổi.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 5:</strong> Nếu có nhiều cách nhúng CSS cùng lúc, cách nào có độ ưu tiên cao nhất?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Inline CSS có độ ưu tiên cao nhất, tiếp đến Internal, cuối cùng là External.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Định dạng căn bản -->
+        <div class="slide" id="slide2">
+            <h1>🎨 Định dạng CSS căn bản</h1>
+            
+            <div class="section-badge">📖 LÝ THUYẾT</div>
+            <div class="code-block">
+                /* Định dạng văn bản */<br>
+                color: #ff6b6b;           /* Màu chữ */<br>
+                text-align: center;        /* Căn lề */<br>
+                font-size: 16px;           /* Cỡ chữ */<br>
+                font-weight: bold;         /* Độ đậm */<br>
+                font-family: 'Arial', sans-serif;<br><br>
+                
+                /* Định dạng khối */<br>
+                background: linear-gradient(135deg, red, blue);<br>
+                border: 2px solid #333;<br>
+                border-radius: 10px;<br>
+                box-shadow: 5px 5px 15px rgba(0,0,0,0.3);<br>
+            </div>
+            
+            <div class="section-badge">🎮 DEMO TƯƠNG TÁC</div>
+            <div class="text-demo-card">
+                <div id="textDemo" style="padding: 1rem; text-align: center;">
+                    <p style="margin: 0;">CSS giúp bạn kiểm soát hoàn toàn giao diện!</p>
+                </div>
+                <div class="text-controls">
+                    <button onclick="changeTextColorDemo()">🎨 Đổi màu</button>
+                    <button onclick="toggleBoldDemo()">💪 Đậm/Nhạt</button>
+                    <button onclick="changeTextAlignDemo()">📏 Căn giữa</button>
+                    <button onclick="increaseFont()">🔍 Tăng cỡ</button>
+                    <button onclick="decreaseFont()">🔍 Giảm cỡ</button>
+                    <button onclick="resetTextDemo()">🔄 Reset</button>
+                </div>
+            </div>
+            
+            <div class="formatting-grid">
+                <div class="format-card">
+                    <h3>🎨 Background</h3>
+                    <div id="bgDemo" class="demo-element" style="background: #667eea; color: white; border-radius: 8px;">
+                        Màu nền
+                    </div>
+                    <div class="text-controls">
+                        <button onclick="changeBgColorDemo2()">🎨 Đổi màu</button>
+                        <button onclick="applyGradientDemo()">🌈 Gradient</button>
+                    </div>
+                </div>
+                <div class="format-card">
+                    <h3>🔲 Border & Radius</h3>
+                    <div id="borderDemo" class="demo-element" style="border: 2px solid #667eea; border-radius: 0px;">
+                        Bo góc & viền
+                    </div>
+                    <div class="text-controls">
+                        <button onclick="changeBorderRadiusDemo()">🔘 Bo góc</button>
+                        <button onclick="changeBorderStyleDemo()">📏 Đổi viền</button>
+                    </div>
+                </div>
+                <div class="format-card">
+                    <h3>✨ Box Shadow</h3>
+                    <div id="shadowDemo" class="demo-element" style="background: #764ba2; color: white; border-radius: 8px;">
+                        Đổ bóng
+                    </div>
+                    <div class="text-controls">
+                        <button onclick="addShadowDemo()">✨ Thêm bóng</button>
+                        <button onclick="addGlowDemo()">💫 Glow</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="practice-section">
+                <h3>📝 BÀI TẬP THỰC HÀNH</h3>
+                <div class="question">
+                    <p><strong>Câu 1:</strong> Thuộc tính nào dùng để thay đổi màu chữ? Viết cú pháp.</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">color: #ff0000; hoặc color: red;</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 2:</strong> Làm thế nào để căn giữa văn bản theo chiều ngang?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">text-align: center;</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 3:</strong> Thuộc tính nào tạo viền bo tròn cho phần tử? Cho ví dụ bo góc 20px.</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">border-radius: 20px;</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 4:</strong> Làm sao để tạo hiệu ứng đổ bóng cho khối với độ mờ 0.3?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">box-shadow: 0 5px 15px rgba(0,0,0,0.3);</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 5:</strong> Đơn vị rem và em khác nhau như thế nào? Nên dùng đơn vị nào cho responsive?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">rem dựa trên font-size của thẻ html, em dựa trên phần tử cha. Nên dùng rem cho responsive.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Box Model (Chi tiết) -->
+        <div class="slide" id="slide3">
+            <h1>📦 Box Model - Mô hình hộp</h1>
+            
+            <div class="section-badge">📖 LÝ THUYẾT</div>
+            <p>Mọi phần tử HTML đều là một hộp với <strong>4 thành phần</strong>: Margin, Border, Padding, Content</p>
+            
+            <div class="box-model-visual">
+                <div class="margin-area">
+                    <strong>📌 MARGIN</strong> (Khoảng cách ngoài)
+                    <div class="border-area">
+                        <strong>🔲 BORDER</strong> (Viền)
+                        <div class="padding-area">
+                            <strong>📦 PADDING</strong> (Khoảng cách trong)
+                            <div class="content-area">
+                                <strong>📄 CONTENT</strong><br>
+                                Nội dung chính
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="code-block">
+                .box {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;width: 200px;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;padding: 20px;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;border: 2px solid black;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;margin: 10px;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;/* Tổng chiều rộng = 200 + 40 + 4 + 20 = 264px */<br>
+                }
+            </div>
+            
+            <div class="section-badge">🎮 DEMO TƯƠNG TÁC</div>
+            <div class="interactive-box">
+                <div id="boxModelDemo" class="box-element" style="width: 200px; padding: 20px; border: 2px solid #667eea; margin: 10px; background: #667eea;">
+                    Nội dung<br>
+                    (Content)
+                </div>
+                
+                <div class="control-group">
+                    <label>Width:</label>
+                    <input type="range" min="100" max="300" value="200" onchange="updateBoxModel('width', this.value)">
+                    <span id="widthVal">200px</span>
+                </div>
+                <div class="control-group">
+                    <label>Padding:</label>
+                    <input type="range" min="0" max="40" value="20" onchange="updateBoxModel('padding', this.value)">
+                    <span id="paddingVal">20px</span>
+                </div>
+                <div class="control-group">
+                    <label>Border:</label>
+                    <input type="range" min="0" max="10" value="2" onchange="updateBoxModel('border', this.value)">
+                    <span id="borderVal">2px</span>
+                </div>
+                <div class="control-group">
+                    <label>Margin:</label>
+                    <input type="range" min="0" max="30" value="10" onchange="updateBoxModel('margin', this.value)">
+                    <span id="marginVal">10px</span>
+                </div>
+                <p><strong>📊 Tổng chiều rộng thực tế: <span id="totalWidth">264</span>px</strong></p>
+                <p><small>💡 Công thức: width + (padding × 2) + (border × 2) + (margin × 2)</small></p>
+            </div>
+            
+            <div class="practice-section">
+                <h3>📝 BÀI TẬP THỰC HÀNH</h3>
+                <div class="question">
+                    <p><strong>Câu 1:</strong> Box Model trong CSS gồm những thành phần nào? Sắp xếp từ trong ra ngoài.</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Content → Padding → Border → Margin</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 2:</strong> Nếu một phần tử có width: 150px, padding: 10px, border: 2px, margin: 5px, tổng chiều rộng thực tế là bao nhiêu?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">150 + 20 + 4 + 10 = 184px</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 3:</strong> Thuộc tính nào dùng để tạo khoảng cách giữa các phần tử với nhau?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Margin</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 4:</strong> box-sizing: border-box; có tác dụng gì? Khi nào nên dùng?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Làm cho width và height bao gồm cả padding và border, nên dùng để dễ tính toán bố cục.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 5:</strong> Làm thế nào để tạo khoảng cách 15px bên trái của phần tử?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">margin-left: 15px; hoặc padding-left: 15px; (tùy mục đích)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Flexbox -->
+        <div class="slide" id="slide4">
+            <h1>🔲 Flexbox - Bố cục linh hoạt</h1>
+            
+            <div class="section-badge">📖 LÝ THUYẾT</div>
+            <p>Flexbox là mô hình bố cục 1 chiều, giúp căn chỉnh phần tử dễ dàng theo chiều ngang hoặc dọc.</p>
+            
+            <div class="code-block">
+                .flex-container {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;display: flex;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;justify-content: center;&nbsp;&nbsp;/* Căn giữa theo chiều ngang */<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;align-items: center;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Căn giữa theo chiều dọc */<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;flex-direction: row;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Hướng: row, column */<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;gap: 10px;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Khoảng cách giữa các item */<br>
+                }
+            </div>
+            
+            <div class="section-badge">🎮 DEMO TƯƠNG TÁC</div>
+            <div class="demo-box">
+                <div class="flex-container" id="flexDemo">
+                    <div class="flex-item">Item 1</div>
+                    <div class="flex-item">Item 2</div>
+                    <div class="flex-item">Item 3</div>
+                </div>
+                <div class="text-controls" style="justify-content: center;">
+                    <button onclick="changeFlexDirectionDemo()">🔄 Đổi hướng (Row/Column)</button>
+                    <button onclick="changeJustifyContent()">📏 Đổi justify-content</button>
+                </div>
+                <p id="flexInfo" style="margin-top: 0.5rem; font-size: 0.85rem;">Hiện tại: flex-direction: row | justify-content: center</p>
+            </div>
+            
+            <div class="practice-section">
+                <h3>📝 BÀI TẬP THỰC HÀNH</h3>
+                <div class="question">
+                    <p><strong>Câu 1:</strong> Làm thế nào để kích hoạt Flexbox trên một container?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">display: flex;</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 2:</strong> justify-content dùng để làm gì? Kể tên các giá trị thường dùng.</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Căn chỉnh các item theo trục chính. Các giá trị: flex-start, center, flex-end, space-between, space-around.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 3:</strong> Làm sao để các item trong flex container hiển thị theo cột dọc?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">flex-direction: column;</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 4:</strong> Thuộc tính nào tạo khoảng cách giữa các flex item? Có thể dùng thay thế bằng cách nào?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">gap. Có thể dùng margin cho các item con.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 5:</strong> align-items: center; có tác dụng gì? Khi nào nó hoạt động?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Căn giữa các item theo trục chéo (vuông góc với flex-direction). Hoạt động khi container có chiều cao xác định.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Grid -->
+        <div class="slide" id="slide5">
+            <h1>🔲 CSS Grid - Bố cục 2 chiều</h1>
+            
+            <div class="section-badge">📖 LÝ THUYẾT</div>
+            <p>Grid là hệ thống bố cục 2 chiều (hàng và cột), cho phép tạo layout phức tạp một cách dễ dàng.</p>
+            
+            <div class="code-block">
+                .grid-container {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;display: grid;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;grid-template-columns: repeat(3, 1fr);&nbsp;&nbsp;/* 3 cột đều nhau */<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;grid-template-rows: auto;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Chiều cao tự động */<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;gap: 20px;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Khoảng cách giữa các ô */<br>
+                }
+            </div>
+            
+            <div class="section-badge">🎮 DEMO TƯƠNG TÁC</div>
+            <div class="demo-box">
+                <div class="grid-container" id="gridDemo">
+                    <div class="grid-item">1</div>
+                    <div class="grid-item">2</div>
+                    <div class="grid-item">3</div>
+                    <div class="grid-item">4</div>
+                    <div class="grid-item">5</div>
+                    <div class="grid-item">6</div>
+                </div>
+                <div class="text-controls" style="justify-content: center;">
+                    <button onclick="changeGridColumns(2)">📊 2 cột</button>
+                    <button onclick="changeGridColumns(3)">📊 3 cột</button>
+                    <button onclick="changeGridColumns(4)">📊 4 cột</button>
+                    <button onclick="resetGrid()">🔄 Reset</button>
+                </div>
+            </div>
+            
+            <div class="practice-section">
+                <h3>📝 BÀI TẬP THỰC HÀNH</h3>
+                <div class="question">
+                    <p><strong>Câu 1:</strong> Làm thế nào để tạo grid với 4 cột có độ rộng bằng nhau?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">grid-template-columns: repeat(4, 1fr);</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 2:</strong> 1fr trong Grid có ý nghĩa gì?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">1fr là 1 phần không gian còn lại (fraction unit), giúp chia đều không gian.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 3:</strong> Làm sao để tạo khoảng cách giữa các grid item?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">gap: 20px; hoặc row-gap và column-gap riêng biệt.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 4:</strong> Grid khác Flexbox như thế nào? Khi nào nên dùng Grid?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Grid làm việc trên 2 chiều (hàng và cột), Flexbox làm việc trên 1 chiều. Dùng Grid khi cần layout phức tạp.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 5:</strong> Làm thế nào để một grid item chiếm 2 cột?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">grid-column: span 2; hoặc grid-column: 1 / 3;</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Responsive -->
+        <div class="slide" id="slide6">
+            <h1>📱 Responsive Design</h1>
+            
+            <div class="section-badge">📖 LÝ THUYẾT</div>
+            <p>Responsive Design là thiết kế web thích ứng với mọi kích thước màn hình sử dụng <strong>Media Queries</strong>.</p>
+            
+            <div class="code-block">
+                /* Desktop mặc định */<br>
+                .container {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;display: flex;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;gap: 20px;<br>
+                }<br><br>
+                
+                /* Tablet */<br>
+                @media (max-width: 768px) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;.container {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flex-direction: column;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                }<br><br>
+                
+                /* Mobile */<br>
+                @media (max-width: 480px) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;.container {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gap: 10px;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                }
+            </div>
+            
+            <div class="section-badge">🎮 DEMO TƯƠNG TÁC</div>
+            <div class="demo-box" id="responsiveDemo">
+                <div style="display: flex; gap: 1rem; justify-content: space-between;">
+                    <div style="background: #667eea; color: white; padding: 1rem; flex: 1; text-align: center;">Column 1</div>
+                    <div style="background: #764ba2; color: white; padding: 1rem; flex: 1; text-align: center;">Column 2</div>
+                    <div style="background: #667eea; color: white; padding: 1rem; flex: 1; text-align: center;">Column 3</div>
+                </div>
+                <p style="margin-top: 1rem; padding: 0.5rem; background: #e9ecef; border-radius: 5px;">
+                    📱 <strong>Thử nghiệm:</strong> Thu nhỏ trình duyệt xuống dưới 768px để xem bố cục chuyển sang dạng cột dọc!
+                </p>
+            </div>
+            
+            <style>
+                @media (max-width: 768px) {
+                    #responsiveDemo > div > div {
+                        margin-bottom: 0.5rem;
+                    }
+                    #responsiveDemo > div {
+                        flex-direction: column !important;
+                    }
+                }
+            </style>
+            
+            <div class="practice-section">
+                <h3>📝 BÀI TẬP THỰC HÀNH</h3>
+                <div class="question">
+                    <p><strong>Câu 1:</strong> Media Query dùng để làm gì? Viết cú pháp cơ bản.</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Áp dụng CSS khác nhau dựa trên kích thước màn hình. @media (max-width: 768px) { ... }</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 2:</strong> Viết media query cho màn hình có độ rộng từ 769px đến 1024px.</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">@media (min-width: 769px) and (max-width: 1024px) { ... }</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 3:</strong> Breakpoint phổ biến cho điện thoại và tablet là bao nhiêu?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Điện thoại: max-width 480px hoặc 768px, Tablet: 768px - 1024px.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 4:</strong> Làm sao để ẩn một phần tử trên mobile?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">@media (max-width: 768px) { .element { display: none; } }</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 5:</strong> viewport meta tag có tác dụng gì? Viết cú pháp đầy đủ.</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt; - Giúp trang web hiển thị đúng trên thiết bị di động.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Hiệu ứng -->
+        <div class="slide" id="slide7">
+            <h1>✨ Hiệu ứng & Tương tác</h1>
+            
+            <div class="section-badge">📖 LÝ THUYẾT</div>
+            <div class="code-block">
+                /* Transition - Hiệu ứng chuyển động */<br>
+                .element {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;transition: all 0.3s ease;<br>
+                }<br><br>
+                
+                /* Hover - Tương tác khi di chuột */<br>
+                .element:hover {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;transform: scale(1.1);<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;background-color: #ff6b6b;<br>
+                }<br><br>
+                
+                /* Animation - Hiệu ứng phức tạp */<br>
+                @keyframes fadeIn {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;from { opacity: 0; }<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;to { opacity: 1; }<br>
+                }
+            </div>
+            
+            <div class="section-badge">🎮 DEMO TƯƠNG TÁC</div>
+            <div style="text-align: center;">
+                <div class="card" id="effectCard">
+                    <div style="background: linear-gradient(135deg, #667eea, #764ba2); height: 150px; display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 3rem;">🎴</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Card Demo</h3>
+                        <p>✨ Di chuột vào để xem hiệu ứng</p>
+                        <button class="btn" onclick="animateCard()">🎬 Click để xem animation</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="practice-section">
+                <h3>📝 BÀI TẬP THỰC HÀNH</h3>
+                <div class="question">
+                    <p><strong>Câu 1:</strong> transition dùng để làm gì? Cú pháp cơ bản?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Tạo hiệu ứng chuyển động mượt mà. transition: property duration timing-function;</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 2:</strong> Làm thế nào để tạo hiệu ứng khi di chuột vào phần tử?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Sử dụng pseudo-class :hover, ví dụ: .element:hover { transform: scale(1.1); }</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 3:</strong> transform: scale(1.2); có tác dụng gì?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Phóng to phần tử lên 1.2 lần kích thước ban đầu.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 4:</strong> Làm sao để tạo hiệu ứng mờ dần khi hover?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">transition: opacity 0.3s; .element:hover { opacity: 0.5; }</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 5:</strong> transition: all 0.3s ease-in-out; có ý nghĩa gì?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Tất cả thuộc tính thay đổi sẽ có hiệu ứng trong 0.3 giây với tốc độ chậm dần ở đầu và cuối.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Demo tổng hợp -->
+        <div class="slide" id="slide8">
+            <h1>🚀 Demo Thực Tế - Ứng dụng tổng hợp</h1>
+            
+            <div class="section-badge">🎯 DỰ ÁN MẪU</div>
+            <div style="background: #1e1e1e; color: white; padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                <div style="display: flex; gap: 2rem; justify-content: center; margin-bottom: 2rem; flex-wrap: wrap;">
+                    <a href="#" style="color: #667eea; text-decoration: none; transition: 0.3s;">🏠 Trang chủ</a>
+                    <a href="#" style="color: white; text-decoration: none; transition: 0.3s;">📦 Sản phẩm</a>
+                    <a href="#" style="color: white; text-decoration: none; transition: 0.3s;">💼 Dịch vụ</a>
+                    <a href="#" style="color: white; text-decoration: none; transition: 0.3s;">📞 Liên hệ</a>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem;">
+                    <div class="card" style="background: white; color: #333; cursor: pointer;">
+                        <div class="card-content">
+                            <h3>🌟 Sản phẩm 1</h3>
+                            <p>Mô tả sản phẩm chất lượng cao</p>
+                            <button class="btn">Mua ngay</button>
+                        </div>
+                    </div>
+                    <div class="card" style="background: white; color: #333; cursor: pointer;">
+                        <div class="card-content">
+                            <h3>🚀 Sản phẩm 2</h3>
+                            <p>Mô tả sản phẩm chất lượng cao</p>
+                            <button class="btn">Mua ngay</button>
+                        </div>
+                    </div>
+                    <div class="card" style="background: white; color: #333; cursor: pointer;">
+                        <div class="card-content">
+                            <h3>💎 Sản phẩm 3</h3>
+                            <p>Mô tả sản phẩm chất lượng cao</p>
+                            <button class="btn">Mua ngay</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-badge">📚 TÀI LIỆU THAM KHẢO</div>
+            <ul style="margin-left: 2rem;">
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank">MDN Web Docs - CSS</a></li>
+                <li><a href="https://css-tricks.com/" target="_blank">CSS Tricks - Hướng dẫn chuyên sâu</a></li>
+                <li><a href="https://www.w3schools.com/css/" target="_blank">W3Schools CSS Tutorial</a></li>
+                <li><a href="https://flexboxfroggy.com/" target="_blank">Flexbox Froggy - Game học Flexbox</a></li>
+                <li><a href="https://cssgridgarden.com/" target="_blank">Grid Garden - Game học Grid</a></li>
+            </ul>
+            
+            <div class="practice-section">
+                <h3>🎯 THÁCH THỨC CUỐI KHÓA</h3>
+                <div class="question">
+                    <p><strong>Thử thách:</strong> Hãy tạo một trang web portfolio cá nhân sử dụng tất cả kiến thức đã học: Flexbox, Grid, Responsive, Hiệu ứng hover, Box Model. Giao diện phải thích ứng trên cả desktop và mobile.</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">💡 Gợi ý</button>
+                    <div class="answer">Gợi ý cấu trúc: Header (Flexbox) + Grid Gallery + Card components + Media queries cho responsive. Sử dụng box-shadow và transition tạo hiệu ứng đẹp mắt.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const navBtns = document.querySelectorAll('.nav-btn');
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+            
+            navBtns.forEach((btn, i) => {
+                if (i === index) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            currentSlide = index;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleAnswer(btn) {
+            const answer = btn.nextElementSibling;
+            answer.classList.toggle('show');
+        }
+
+        // Slide 2 Demo
+        function changeDemoColor() {
+            document.getElementById('demoText2').style.color = '#e74c3c';
+        }
+        function changeBgColorDemo() {
+            document.getElementById('syntaxDemo').style.background = '#e8f0fe';
+        }
+
+        // Slide 3 Text Demo
+        let textColor = '#333';
+        let isBold = false;
+        let textAlign = 'center';
+        let fontSize = 16;
+        const textPara = document.querySelector('#textDemo p');
+        
+        function changeTextColorDemo() {
+            const colors = ['#667eea', '#e74c3c', '#2ecc71', '#f39c12'];
+            textColor = colors[Math.floor(Math.random() * colors.length)];
+            textPara.style.color = textColor;
+        }
+        function toggleBoldDemo() {
+            isBold = !isBold;
+            textPara.style.fontWeight = isBold ? 'bold' : 'normal';
+        }
+        function changeTextAlignDemo() {
+            const aligns = ['left', 'center', 'right'];
+            const currentIndex = aligns.indexOf(textAlign);
+            textAlign = aligns[(currentIndex + 1) % aligns.length];
+            textPara.style.textAlign = textAlign;
+        }
+        function increaseFont() {
+            fontSize = Math.min(fontSize + 2, 32);
+            textPara.style.fontSize = fontSize + 'px';
+        }
+        function decreaseFont() {
+            fontSize = Math.max(fontSize - 2, 12);
+            textPara.style.fontSize = fontSize + 'px';
+        }
+        function resetTextDemo() {
+            textColor = '#333';
+            isBold = false;
+            textAlign = 'center';
+            fontSize = 16;
+            textPara.style.color = textColor;
+            textPara.style.fontWeight = 'normal';
+            textPara.style.textAlign = textAlign;
+            textPara.style.fontSize = fontSize + 'px';
+        }
+        
+        // Background Demo
+        function changeBgColorDemo2() {
+            const colors = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12'];
+            document.getElementById('bgDemo').style.background = colors[Math.floor(Math.random() * colors.length)];
+        }
+        function applyGradientDemo() {
+            document.getElementById('bgDemo').style.background = 'linear-gradient(135deg, #667eea, #764ba2)';
+        }
+        
+        // Border Demo
+        let borderRadiusVal = 0;
+        function changeBorderRadiusDemo() {
+            borderRadiusVal = borderRadiusVal === 0 ? 20 : borderRadiusVal === 20 ? 40 : 0;
+            document.getElementById('borderDemo').style.borderRadius = borderRadiusVal + 'px';
+        }
+        let borderStyleVal = 'solid';
+        function changeBorderStyleDemo() {
+            const styles = ['solid', 'dashed', 'dotted', 'double'];
+            const currentIndex = styles.indexOf(borderStyleVal);
+            borderStyleVal = styles[(currentIndex + 1) % styles.length];
+            document.getElementById('borderDemo').style.border = `3px ${borderStyleVal} #667eea`;
+        }
+        
+        // Shadow Demo
+        function addShadowDemo() {
+            document.getElementById('shadowDemo').style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)';
+        }
+        function addGlowDemo() {
+            document.getElementById('shadowDemo').style.boxShadow = '0 0 20px rgba(102, 126, 234, 0.8)';
+        }
+        
+        // Box Model
+        let boxValues = { width: 200, padding: 20, border: 2, margin: 10 };
+        function updateBoxModel(property, value) {
+            boxValues[property] = parseInt(value);
+            const box = document.getElementById('boxModelDemo');
+            box.style.width = boxValues.width + 'px';
+            box.style.padding = boxValues.padding + 'px';
+            box.style.borderWidth = boxValues.border + 'px';
+            box.style.margin = boxValues.margin + 'px';
+            document.getElementById('widthVal').innerText = boxValues.width + 'px';
+            document.getElementById('paddingVal').innerText = boxValues.padding + 'px';
+            document.getElementById('borderVal').innerText = boxValues.border + 'px';
+            document.getElementById('marginVal').innerText = boxValues.margin + 'px';
+            const total = boxValues.width + (boxValues.padding * 2) + (boxValues.border * 2) + (boxValues.margin * 2);
+            document.getElementById('totalWidth').innerText = total;
+        }
+        
+        // Flexbox Demo
+        let flexDirectionVal = 'row';
+        let justifyContentVal = 'center';
+        function changeFlexDirectionDemo() {
+            const flexContainer = document.getElementById('flexDemo');
+            flexDirectionVal = flexDirectionVal === 'row' ? 'column' : 'row';
+            flexContainer.style.flexDirection = flexDirectionVal;
+            document.getElementById('flexInfo').innerHTML = `Hiện tại: flex-direction: ${flexDirectionVal} | justify-content: ${justifyContentVal}`;
+        }
+        function changeJustifyContent() {
+            const flexContainer = document.getElementById('flexDemo');
+            const values = ['flex-start', 'center', 'flex-end', 'space-between', 'space-around'];
+            const currentIndex = values.indexOf(justifyContentVal);
+            justifyContentVal = values[(currentIndex + 1) % values.length];
+            flexContainer.style.justifyContent = justifyContentVal;
+            document.getElementById('flexInfo').innerHTML = `Hiện tại: flex-direction: ${flexDirectionVal} | justify-content: ${justifyContentVal}`;
+        }
+        
+        // Grid Demo
+        function changeGridColumns(cols) {
+            const gridContainer = document.getElementById('gridDemo');
+            gridContainer.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+        }
+        function resetGrid() {
+            document.getElementById('gridDemo').style.gridTemplateColumns = 'repeat(3, 1fr)';
+        }
+        
+        // Animation
+        function animateCard() {
+            const card = document.getElementById('effectCard');
+            card.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                card.style.transform = 'scale(1)';
+            }, 200);
+            card.style.transition = 'all 0.2s ease';
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            } else if (e.key === 'ArrowRight' && currentSlide < slides.length - 1) {
+                showSlide(currentSlide + 1);
+            }
+        });
+    </script>
+</body>
+</html>

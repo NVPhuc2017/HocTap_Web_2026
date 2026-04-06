@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Thực Hành HTML & CSS - 40 Bài Tập + 4 Đề Kiểm Tra</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem 3rem;
+        }
+
+        /* Section Titles */
+        .section-title {
+            text-align: center;
+            color: white;
+            margin: 2rem 0 1.5rem;
+            font-size: 1.8rem;
+            position: relative;
+        }
+        .section-title span {
+            background: rgba(255,255,255,0.2);
+            padding: 0.3rem 1.5rem;
+            border-radius: 40px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Filter Buttons */
+        .filter-section {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .filter-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: #f39c12;
+            color: #1e3c72;
+        }
+
+        /* Exercises Grid */
+        .exercises-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Exercise Card */
+        .exercise-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .exercise-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem;
+        }
+
+        .card-header h3 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .level-badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            margin-top: 0.5rem;
+        }
+
+        .level-basic { background: #27ae60; }
+        .level-intermediate { background: #f39c12; }
+        .level-advanced { background: #e74c3c; }
+
+        .card-body {
+            padding: 1.2rem;
+        }
+
+        .card-body p {
+            color: #555;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .requirements {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .requirements h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .requirements ul {
+            margin-left: 1.2rem;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .requirements li {
+            margin: 0.3rem 0;
+        }
+
+        .card-footer {
+            padding: 1rem;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .btn-show-code {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-show-code:hover {
+            background: #2980b9;
+        }
+
+        .btn-run {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-run:hover {
+            background: #229954;
+        }
+
+        /* Test Section */
+        .test-section {
+            background: white;
+            border-radius: 20px;
+            margin: 3rem 0;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .test-header {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .test-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .test-header p {
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .test-body {
+            padding: 1.5rem;
+        }
+
+        .test-question {
+            background: #f8f9fa;
+            padding: 1.2rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #e74c3c;
+        }
+
+        .test-question h3 {
+            color: #e74c3c;
+            margin-bottom: 0.8rem;
+        }
+
+        .test-question p {
+            margin-bottom: 1rem;
+        }
+
+        .test-question ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .test-question li {
+            margin: 0.3rem 0;
+        }
+
+        .test-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .test-btn:hover {
+            background: #c0392b;
+        }
+
+        .test-solution {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #e8f0fe;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+        }
+
+        .test-solution.show {
+            display: block;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 2rem auto;
+            width: 90%;
+            max-width: 900px;
+            border-radius: 15px;
+            overflow: hidden;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.3rem;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-body pre {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .copy-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .result-frame {
+            width: 100%;
+            height: 450px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .modal-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 0.5rem;
+        }
+
+        .tab-btn {
+            background: #f0f0f0;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .exercises-grid {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 0 1rem 2rem;
+            }
+            .header h1 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📚 Thực Hành HTML & CSS</h1>
+        <p>40 bài tập thực tế từ cơ bản đến nâng cao + 4 đề kiểm tra</p>
+        <div class="stats">
+            <div class="stat-card">🌐 20 Bài HTML</div>
+            <div class="stat-card">🎨 20 Bài CSS</div>
+            <div class="stat-card">📝 4 Đề Kiểm Tra</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="filter-section">
+            <button class="filter-btn active" data-filter="all">📋 Tất cả</button>
+            <button class="filter-btn" data-filter="html">🌐 HTML</button>
+            <button class="filter-btn" data-filter="css">🎨 CSS</button>
+            <button class="filter-btn" data-filter="basic">⭐ Cơ bản</button>
+            <button class="filter-btn" data-filter="intermediate">📈 Trung cấp</button>
+            <button class="filter-btn" data-filter="advanced">🚀 Nâng cao</button>
+        </div>
+
+        <div id="exercisesGrid" class="exercises-grid"></div>
+
+        <!-- Đề kiểm tra 1: HTML Cơ bản -->
+        <div class="test-section" id="test1">
+            <div class="test-header">
+                <h2>📝 ĐỀ KIỂM TRA 1: HTML CƠ BẢN (Bài 1-5)</h2>
+                <p>Kiểm tra kiến thức về cấu trúc HTML, thẻ cơ bản, danh sách, liên kết, bảng và form</p>
+            </div>
+            <div class="test-body">
+                <div class="test-question">
+                    <h3>Câu 1: Trang web giới thiệu bản thân (15 điểm)</h3>
+                    <p><strong>Yêu cầu:</strong> Tạo trang web giới thiệu bản thân với các nội dung:</p>
+                    <ul>
+                        <li>Tiêu đề trang: "Giới thiệu về tôi"</li>
+                        <li>Thẻ h1: Họ tên của bạn</li>
+                        <li>Một đoạn văn giới thiệu về bản thân (sở thích, đam mê)</li>
+                        <li>Danh sách không thứ tự các kỹ năng (tối thiểu 3 kỹ năng)</li>
+                        <li>Một hình ảnh đại diện (có thể dùng ảnh placeholder)</li>
+                        <li>Liên kết đến trang mạng xã hội (mở tab mới)</li>
+                    </ul>
+                    <button class="test-btn" onclick="toggleTestSolution(1)">💡 Xem gợi ý lời giải</button>
+                    <div id="testSolution1" class="test-solution">
+                        <pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Giới thiệu về tôi&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Nguyễn Văn A&lt;/h1&gt;
+    &lt;img src="avatar-placeholder.jpg" alt="Ảnh đại diện" width="150"&gt;
+    &lt;p&gt;Xin chào! Tôi là Nguyễn Văn A, hiện đang học lập trình web. Tôi đam mê thiết kế giao diện và xây dựng các ứng dụng web.&lt;/p&gt;
+    &lt;h2&gt;Kỹ năng&lt;/h2&gt;
+    &lt;ul&gt;
+        &lt;li&gt;HTML5&lt;/li&gt;
+        &lt;li&gt;CSS3&lt;/li&gt;
+        &lt;li&gt;JavaScript cơ bản&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;p&gt;Kết nối với tôi: &lt;a href="https://facebook.com" target="_blank"&gt;Facebook&lt;/a&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+                    </div>
+                </div>
+                <div class="test-question">
+                    <h3>Câu 2: Bảng thời khóa biểu (15 điểm)</h3>
+                    <p><strong>Yêu cầu:</strong> Tạo bảng thời khóa biểu với:</p>
+                    <ul>
+                        <li>Bảng có 6 cột (Thứ, Tiết 1, Tiết 2, Tiết 3, Tiết 4, Tiết 5)</li>
+                        <li>Hàng tiêu đề có màu nền xám nhạt</li>
+                        <li>Hiển thị 5 ngày trong tuần (Thứ 2 đến Thứ 6)</li>
+                        <li>Điền nội dung môn học phù hợp</li>
+                    </ul>
+                    <button class="test-btn" onclick="toggleTestSolution(2)">💡 Xem gợi ý lời giải</button>
+                    <div id="testSolution2" class="test-solution">
+                        <pre>&lt;table border="1" cellpadding="8"&gt;
+    &lt;tr&gt;
+        &lt;th&gt;Thứ&lt;/th&gt;&lt;th&gt;Tiết 1&lt;/th&gt;&lt;th&gt;Tiết 2&lt;/th&gt;&lt;th&gt;Tiết 3&lt;/th&gt;&lt;th&gt;Tiết 4&lt;/th&gt;&lt;th&gt;Tiết 5&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Thứ 2&lt;/td&gt;&lt;td&gt;Toán&lt;/td&gt;&lt;td&gt;Văn&lt;/td&gt;&lt;td&gt;Anh&lt;/td&gt;&lt;td&gt;Lý&lt;/td&gt;&lt;td&gt;Sinh&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Thứ 3&lt;/td&gt;&lt;td&gt;Văn&lt;/td&gt;&lt;td&gt;Toán&lt;/td&gt;&lt;td&gt;Hóa&lt;/td&gt;&lt;td&gt;Sử&lt;/td&gt;&lt;td&gt;Địa&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Thứ 4&lt;/td&gt;&lt;td&gt;Anh&lt;/td&gt;&lt;td&gt;Văn&lt;/td&gt;&lt;td&gt;Toán&lt;/td&gt;&lt;td&gt;Lý&lt;/td&gt;&lt;td&gt;Tin&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Thứ 5&lt;/td&gt;&lt;td&gt;Toán&lt;/td&gt;&lt;td&gt;Hóa&lt;/td&gt;&lt;td&gt;Sinh&lt;/td&gt;&lt;td&gt;Văn&lt;/td&gt;&lt;td&gt;Anh&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Thứ 6&lt;/td&gt;&lt;td&gt;Lý&lt;/td&gt;&lt;td&gt;Sử&lt;/td&gt;&lt;td&gt;Địa&lt;/td&gt;&lt;td&gt;GDCD&lt;/td&gt;&lt;td&gt;Thể dục&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Đề kiểm tra 2: HTML Nâng cao (Bài 6-10) -->
+        <div class="test-section" id="test2">
+            <div class="test-header">
+                <h2>📝 ĐỀ KIỂM TRA 2: HTML NÂNG CAO (Bài 6-10)</h2>
+                <p>Kiểm tra kiến thức về form nâng cao, iframe, multimedia và semantic HTML</p>
+            </div>
+            <div class="test-body">
+                <div class="test-question">
+                    <h3>Câu 1: Form đăng ký khóa học (15 điểm)</h3>
+                    <p><strong>Yêu cầu:</strong> Tạo form đăng ký khóa học với các trường:</p>
+                    <ul>
+                        <li>Họ tên (text, required)</li>
+                        <li>Email (email, required)</li>
+                        <li>Số điện thoại (tel)</li>
+                        <li>Khóa học muốn đăng ký (select với 3 lựa chọn: HTML/CSS, JavaScript, ReactJS)</li>
+                        <li>Phương thức thanh toán (radio: Chuyển khoản / Tiền mặt)</li>
+                        <li>Ghi chú (textarea)</li>
+                        <li>Nút gửi và nút reset</li>
+                    </ul>
+                    <button class="test-btn" onclick="toggleTestSolution(3)">💡 Xem gợi ý lời giải</button>
+                    <div id="testSolution3" class="test-solution">
+                        <pre>&lt;form&gt;
+    &lt;label&gt;Họ tên: &lt;/label&gt;&lt;input type="text" name="fullname" required&gt;&lt;br&gt;
+    &lt;label&gt;Email: &lt;/label&gt;&lt;input type="email" name="email" required&gt;&lt;br&gt;
+    &lt;label&gt;SĐT: &lt;/label&gt;&lt;input type="tel" name="phone"&gt;&lt;br&gt;
+    &lt;label&gt;Khóa học: &lt;/label&gt;
+    &lt;select name="course"&gt;
+        &lt;option&gt;HTML/CSS&lt;/option&gt;
+        &lt;option&gt;JavaScript&lt;/option&gt;
+        &lt;option&gt;ReactJS&lt;/option&gt;
+    &lt;/select&gt;&lt;br&gt;
+    &lt;label&gt;Thanh toán: &lt;/label&gt;
+    &lt;input type="radio" name="payment" value="bank"&gt; Chuyển khoản
+    &lt;input type="radio" name="payment" value="cash"&gt; Tiền mặt&lt;br&gt;
+    &lt;label&gt;Ghi chú: &lt;/label&gt;&lt;textarea rows="3"&gt;&lt;/textarea&gt;&lt;br&gt;
+    &lt;button type="submit"&gt;Gửi đăng ký&lt;/button&gt;
+    &lt;button type="reset"&gt;Nhập lại&lt;/button&gt;
+&lt;/form&gt;</pre>
+                    </div>
+                </div>
+                <div class="test-question">
+                    <h3>Câu 2: Trang video gallery (15 điểm)</h3>
+                    <p><strong>Yêu cầu:</strong> Tạo trang gallery video với:</p>
+                    <ul>
+                        <li>Tiêu đề trang: "Video Gallery"</li>
+                        <li>Nhúng 2 video từ YouTube bằng iframe</li>
+                        <li>Nhúng 1 video local bằng thẻ video (có controls)</li>
+                        <li>Nhúng 1 file audio (có controls)</li>
+                        <li>Sử dụng semantic HTML: header, main, section, footer</li>
+                    </ul>
+                    <button class="test-btn" onclick="toggleTestSolution(4)">💡 Xem gợi ý lời giải</button>
+                    <div id="testSolution4" class="test-solution">
+                        <pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Video Gallery&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+    &lt;header&gt;&lt;h1&gt;Video Gallery&lt;/h1&gt;&lt;/header&gt;
+    &lt;main&gt;
+        &lt;section&gt;
+            &lt;h2&gt;YouTube Videos&lt;/h2&gt;
+            &lt;iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ"&gt;&lt;/iframe&gt;
+            &lt;iframe width="560" height="315" src="https://www.youtube.com/embed/jfKfPfyJRdk"&gt;&lt;/iframe&gt;
+        &lt;/section&gt;
+        &lt;section&gt;
+            &lt;h2&gt;Video Local&lt;/h2&gt;
+            &lt;video width="560" controls&gt;
+                &lt;source src="sample.mp4" type="video/mp4"&gt;
+            &lt;/video&gt;
+        &lt;/section&gt;
+        &lt;section&gt;
+            &lt;h2&gt;Audio&lt;/h2&gt;
+            &lt;audio controls&gt;
+                &lt;source src="sample.mp3" type="audio/mpeg"&gt;
+            &lt;/audio&gt;
+        &lt;/section&gt;
+    &lt;/main&gt;
+    &lt;footer&gt;&lt;p&gt;&copy; 2024 Video Gallery&lt;/p&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Đề kiểm tra 3: CSS Cơ bản (Bài 11-15) -->
+        <div class="test-section" id="test3">
+            <div class="test-header">
+                <h2>📝 ĐỀ KIỂM TRA 3: CSS CƠ BẢN (Bài 11-15)</h2>
+                <p>Kiểm tra kiến thức về selector, box model, flexbox cơ bản</p>
+            </div>
+            <div class="test-body">
+                <div class="test-question">
+                    <h3>Câu 1: Profile Card (15 điểm)</h3>
+                    <p><strong>Yêu cầu:</strong> Thiết kế profile card với CSS:</p>
+                    <ul>
+                        <li>Card có width 300px, border-radius 15px, box-shadow</li>
+                        <li>Ảnh đại diện hình tròn (width 100px, border-radius 50%)</li>
+                        <li>Tên người dùng font-size 24px, màu xanh đậm</li>
+                        <li>Mô tả công việc màu xám, font italic</li>
+                        <li>Nút "Theo dõi" có hiệu ứng hover (đổi màu)</li>
+                        <li>Card được căn giữa trang</li>
+                    </ul>
+                    <button class="test-btn" onclick="toggleTestSolution(5)">💡 Xem gợi ý lời giải</button>
+                    <div id="testSolution5" class="test-solution">
+                        <pre>&lt;style&gt;
+    .profile-card {
+        width: 300px;
+        margin: 50px auto;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        text-align: center;
+        padding: 20px;
+    }
+    .avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    h2 { color: #2c3e50; margin: 10px 0; }
+    .job { color: #7f8c8d; font-style: italic; }
+    .follow-btn {
+        background: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+    .follow-btn:hover { background: #2980b9; }
+&lt;/style&gt;</pre>
+                    </div>
+                </div>
+                <div class="test-question">
+                    <h3>Câu 2: Flexbox Navigation (15 điểm)</h3>
+                    <p><strong>Yêu cầu:</strong> Tạo thanh navigation với Flexbox:</p>
+                    <ul>
+                        <li>Thanh navigation có background gradient</li>
+                        <li>Các mục menu: Trang chủ, Giới thiệu, Sản phẩm, Dịch vụ, Liên hệ</li>
+                        <li>Menu căn giữa theo chiều ngang, khoảng cách 25px</li>
+                        <li>Hover: đổi màu nền và có hiệu ứng chuyển động</li>
+                        <li>Responsive: màn hình &lt; 768px menu chuyển thành dọc</li>
+                    </ul>
+                    <button class="test-btn" onclick="toggleTestSolution(6)">💡 Xem gợi ý lời giải</button>
+                    <div id="testSolution6" class="test-solution">
+                        <pre>&lt;style&gt;
+    nav {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        padding: 1rem;
+    }
+    .nav-menu {
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        list-style: none;
+    }
+    .nav-menu a {
+        color: white;
+        text-decoration: none;
+        padding: 10px 20px;
+        transition: all 0.3s;
+    }
+    .nav-menu a:hover {
+        background: rgba(255,255,255,0.2);
+        border-radius: 5px;
+        transform: translateY(-2px);
+    }
+    @media (max-width: 768px) {
+        .nav-menu {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+&lt;/style&gt;</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Đề kiểm tra 4: CSS Nâng cao (Bài 16-20) -->
+        <div class="test-section" id="test4">
+            <div class="test-header">
+                <h2>📝 ĐỀ KIỂM TRA 4: CSS NÂNG CAO (Bài 16-20)</h2>
+                <p>Kiểm tra kiến thức về Grid, animation, responsive design</p>
+            </div>
+            <div class="test-body">
+                <div class="test-question">
+                    <h3>Câu 1: Product Grid (15 điểm)</h3>
+                    <p><strong>Yêu cầu:</strong> Tạo grid sản phẩm với CSS Grid:</p>
+                    <ul>
+                        <li>Desktop: 4 cột, tablet: 2 cột, mobile: 1 cột</li>
+                        <li>Mỗi card sản phẩm có hình ảnh, tên sản phẩm, giá, nút mua</li>
+                        <li>Hiệu ứng hover: card nổi lên, đổ bóng đậm hơn</li>
+                        <li>Sử dụng grid-gap: 20px</li>
+                    </ul>
+                    <button class="test-btn" onclick="toggleTestSolution(7)">💡 Xem gợi ý lời giải</button>
+                    <div id="testSolution7" class="test-solution">
+                        <pre>&lt;style&gt;
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        padding: 20px;
+    }
+    .product-card {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: all 0.3s;
+    }
+    .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    }
+    @media (max-width: 992px) {
+        .products-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 576px) {
+        .products-grid { grid-template-columns: 1fr; }
+    }
+&lt;/style&gt;</pre>
+                    </div>
+                </div>
+                <div class="test-question">
+                    <h3>Câu 2: Animation & Keyframes (15 điểm)</h3>
+                    <p><strong>Yêu cầu:</strong> Tạo hiệu ứng animation:</p>
+                    <ul>
+                        <li>Tạo hiệu ứng fadeIn cho phần tử khi load trang</li>
+                        <li>Tạo hiệu ứng nhấp nháy cho nút "Đặt hàng"</li>
+                        <li>Tạo hiệu ứng loader (vòng tròn quay) khi đang tải</li>
+                        <li>Sử dụng @keyframes và animation</li>
+                    </ul>
+                    <button class="test-btn" onclick="toggleTestSolution(8)">💡 Xem gợi ý lời giải</button>
+                    <div id="testSolution8" class="test-solution">
+                        <pre>&lt;style&gt;
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .container { animation: fadeIn 0.5s ease; }
+    
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; background: #e74c3c; }
+    }
+    .btn-order { animation: blink 1s infinite; }
+    
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    .loader {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+&lt;/style&gt;</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal hiển thị code giải -->
+    <div id="codeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Code giải bài tập</h2>
+                <button class="close-modal" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-tabs">
+                    <button class="tab-btn active" onclick="showCodeTab()">📄 Code giải</button>
+                    <button class="tab-btn" onclick="showResultTab()">▶️ Kết quả</button>
+                </div>
+                <button class="copy-btn" onclick="copyCode()">📋 Sao chép code</button>
+                <pre id="modalCode"><code></code></pre>
+                <iframe id="resultFrame" class="result-frame" style="display: none;"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Danh sách bài tập HTML (20 bài)
+        const htmlExercises = [
+            { id: 1, title: "Trang web đầu tiên", level: "basic", desc: "Tạo trang HTML cơ bản với cấu trúc đầy đủ, tiêu đề và đoạn văn.", req: ["DOCTYPE", "html", "head", "title", "body", "h1", "p"] },
+            { id: 2, title: "Danh sách và liên kết", level: "basic", desc: "Tạo danh sách không thứ tự và liên kết đến các trang web.", req: ["ul", "li", "a", "target='_blank'"] },
+            { id: 3, title: "Bảng thông tin", level: "basic", desc: "Tạo bảng hiển thị thông tin cá nhân.", req: ["table", "tr", "td", "border"] },
+            { id: 4, title: "Form đăng ký cơ bản", level: "basic", desc: "Tạo form đăng ký với các trường cơ bản.", req: ["input text", "email", "password", "radio", "checkbox", "submit"] },
+            { id: 5, title: "Thẻ định dạng văn bản", level: "basic", desc: "Sử dụng các thẻ định dạng văn bản.", req: ["strong", "em", "mark", "small", "del", "ins"] },
+            { id: 6, title: "Form nâng cao", level: "intermediate", desc: "Form với select, textarea, range, date.", req: ["select", "textarea", "input range", "input date"] },
+            { id: 7, title: "Iframe nhúng nội dung", level: "intermediate", desc: "Nhúng bản đồ Google và video YouTube.", req: ["iframe", "Google Maps", "YouTube"] },
+            { id: 8, title: "Multimedia Gallery", level: "intermediate", desc: "Nhúng video và audio vào trang.", req: ["video", "audio", "controls"] },
+            { id: 9, title: "Semantic HTML", level: "intermediate", desc: "Xây dựng cấu trúc trang với semantic tags.", req: ["header", "nav", "main", "section", "article", "aside", "footer"] },
+            { id: 10, title: "Responsive Table", level: "intermediate", desc: "Tạo bảng responsive với overflow-x.", req: ["table", "overflow-x:auto"] },
+            { id: 11, title: "Form với validation HTML5", level: "advanced", desc: "Form có validation required, pattern.", req: ["required", "pattern", "minlength"] },
+            { id: 12, title: "SVG và Canvas", level: "advanced", desc: "Vẽ hình bằng SVG và Canvas.", req: ["svg", "canvas"] },
+            { id: 13, title: "Web Components", level: "advanced", desc: "Tạo custom element với template.", req: ["template", "custom element"] },
+            { id: 14, title: "Drag and Drop", level: "advanced", desc: "Tính năng kéo thả file.", req: ["draggable", "drag events"] },
+            { id: 15, title: "LocalStorage Form", level: "advanced", desc: "Form lưu dữ liệu vào localStorage.", req: ["localStorage", "JSON"] },
+            { id: 16, title: "SEO Meta Tags", level: "advanced", desc: "Thêm meta tags cho SEO.", req: ["meta description", "meta keywords", "og:image"] },
+            { id: 17, title: "Microdata Schema", level: "advanced", desc: "Thêm microdata cho bài viết.", req: ["itemscope", "itemtype", "itemprop"] },
+            { id: 18, title: "PWA Manifest", level: "advanced", desc: "Tạo manifest.json cho PWA.", req: ["manifest.json", "theme-color"] },
+            { id: 19, title: "Web Workers", level: "advanced", desc: "Sử dụng Web Worker.", req: ["Worker", "postMessage"] },
+            { id: 20, title: "WebSocket Chat", level: "advanced", desc: "Kết nối WebSocket.", req: ["WebSocket", "onmessage"] }
+        ];
+
+        // Danh sách bài tập CSS (20 bài) - Nội dung thực tế
+        const cssExercises = [
+            { id: 21, title: "Định dạng văn bản", level: "basic", desc: "CSS cho màu sắc, font chữ, căn chỉnh văn bản.", req: ["color", "font-family", "text-align", "text-decoration"] },
+            { id: 22, title: "Box Model - Card", level: "basic", desc: "Tạo card sản phẩm với Box Model.", req: ["margin", "padding", "border", "border-radius", "box-shadow"] },
+            { id: 23, title: "Background & Gradient", level: "basic", desc: "Background-color, image, gradient.", req: ["background", "linear-gradient", "background-image"] },
+            { id: 24, title: "Positioning", level: "basic", desc: "Sử dụng position relative, absolute, fixed.", req: ["position", "top", "left", "z-index"] },
+            { id: 25, title: "Pseudo-classes", level: "basic", desc: "Sử dụng hover, active, focus, nth-child.", req: [":hover", ":active", ":focus", ":nth-child"] },
+            { id: 26, title: "Flexbox Navigation", level: "intermediate", desc: "Thanh navigation responsive với Flexbox.", req: ["display:flex", "justify-content", "align-items", "flex-wrap"] },
+            { id: 27, title: "Flexbox Gallery", level: "intermediate", desc: "Gallery ảnh với Flexbox wrap.", req: ["flex-wrap", "gap", "flex-basis"] },
+            { id: 28, title: "Grid Layout", level: "intermediate", desc: "Grid 3 cột cơ bản.", req: ["display:grid", "grid-template-columns", "gap"] },
+            { id: 29, title: "Grid Portfolio", level: "intermediate", desc: "Portfolio grid với các kích thước khác nhau.", req: ["grid-template-areas", "grid-column", "grid-row"] },
+            { id: 30, title: "Responsive Design", level: "intermediate", desc: "Media queries cho responsive.", req: ["@media", "max-width", "min-width"] },
+            { id: 31, title: "Product Card Grid", level: "advanced", desc: "Grid sản phẩm responsive.", req: ["grid-template-columns: repeat(auto-fit, minmax(250px,1fr))"] },
+            { id: 32, title: "Animated Button", level: "advanced", desc: "Nút với hiệu ứng transition và transform.", req: ["transition", "transform", "scale"] },
+            { id: 33, title: "Keyframes Animation", level: "advanced", desc: "Tạo hiệu ứng fadeIn, slideIn.", req: ["@keyframes", "animation"] },
+            { id: 34, title: "Loading Spinner", level: "advanced", desc: "Vòng tròn quay loading.", req: ["animation", "border-radius", "transform"] },
+            { id: 35, title: "Dark/Light Mode", level: "advanced", desc: "Chuyển đổi theme với CSS variables.", req: [":root", "var()", "prefers-color-scheme"] },
+            { id: 36, title: "Parallax Scrolling", level: "advanced", desc: "Hiệu ứng parallax khi cuộn.", req: ["background-attachment:fixed"] },
+            { id: 37, title: "CSS Filter Effects", level: "advanced", desc: "Filter blur, grayscale, brightness.", req: ["filter", "blur", "grayscale"] },
+            { id: 38, title: "Clip Path Shapes", level: "advanced", desc: "Tạo hình dạng với clip-path.", req: ["clip-path", "polygon", "circle"] },
+            { id: 39, title: "CSS Counters", level: "advanced", desc: "Đánh số tự động với counters.", req: ["counter-reset", "counter-increment"] },
+            { id: 40, title: "3D Transform", level: "advanced", desc: "Hiệu ứng 3D cho card.", req: ["transform-style", "perspective", "rotateY"] }
+        ];
+
+        // Tạo nội dung đầy đủ cho mỗi bài tập
+        function generateFullExercise(base, type, index) {
+            return {
+                id: base.id,
+                title: base.title,
+                level: base.level,
+                category: type,
+                order: index,
+                description: base.desc,
+                requirements: base.req.map(r => `Sử dụng thuộc tính/thẻ: ${r}`),
+                solution: getSampleSolution(base.title, type)
+            };
+        }
+
+        // Hàm tạo code mẫu cho từng bài tập
+        function getSampleSolution(title, type) {
+            if (type === "html") {
+                return `<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>${title}</title>
+</head>
+<body>
+    <h1>${title}</h1>
+    <p>Đây là bài thực hành ${title}. Hãy hoàn thành theo yêu cầu đề bài.</p>
+    <!-- Thêm nội dung theo yêu cầu tại đây -->
+</body>
+</html>`;
+            } else {
+                return `<!DOCTYPE html>
+<html>
+<head>
+    <title>${title}</title>
+    <style>
+        /* CSS cho bài tập ${title} */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+        }
+        /* Thêm CSS theo yêu cầu tại đây */
+    </style>
+</head>
+<body>
+    <h1>${title}</h1>
+    <p>Đây là bài thực hành ${title}. Hãy hoàn thành theo yêu cầu đề bài.</p>
+</body>
+</html>`;
+            }
+        }
+
+        // Tạo danh sách bài tập hoàn chỉnh
+        const exercises = [];
+        htmlExercises.forEach((ex, idx) => {
+            exercises.push(generateFullExercise(ex, "html", idx + 1));
+        });
+        cssExercises.forEach((ex, idx) => {
+            exercises.push(generateFullExercise(ex, "css", idx + 21));
+        });
+
+        let currentSolution = "";
+        let currentTab = "code";
+
+        function renderExercises(filter = "all") {
+            const grid = document.getElementById("exercisesGrid");
+            let filtered = exercises;
+            if (filter !== "all") {
+                filtered = exercises.filter(ex => ex.level === filter || ex.category === filter);
+            }
+            
+            grid.innerHTML = filtered.map(ex => `
+                <div class="exercise-card">
+                    <div class="card-header">
+                        <h3>${ex.id}. ${ex.title}</h3>
+                        <span class="level-badge level-${ex.level === 'basic' ? 'basic' : (ex.level === 'intermediate' ? 'intermediate' : 'advanced')}">
+                            ${ex.level === 'basic' ? '⭐ Cơ bản' : (ex.level === 'intermediate' ? '📈 Trung cấp' : '🚀 Nâng cao')}
+                        </span>
+                        <span style="display: inline-block; margin-left: 0.5rem; font-size: 0.7rem; background: rgba(255,255,255,0.3); padding: 0.2rem 0.5rem; border-radius: 15px;">
+                            ${ex.category === 'html' ? '🌐 HTML' : '🎨 CSS'}
+                        </span>
+                    </div>
+                    <div class="card-body">
+                        <p>${ex.description}</p>
+                        <div class="requirements">
+                            <h4>📋 Yêu cầu:</h4>
+                            <ul>${ex.requirements.map(r => `<li>${r}</li>`).join('')}</ul>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-show-code" onclick="showSolution(${ex.id})">💻 Xem Code Giải</button>
+                        <button class="btn btn-run" onclick="runSolution(${ex.id})">▶️ Chạy Thử</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showSolution(id) {
+            const ex = exercises.find(e => e.id === id);
+            if (ex) {
+                currentSolution = ex.solution;
+                document.getElementById("modalTitle").innerHTML = `📝 ${ex.title} - Lời giải`;
+                document.getElementById("modalCode").innerHTML = escapeHtml(ex.solution);
+                document.getElementById("modalCode").style.display = "block";
+                document.getElementById("resultFrame").style.display = "none";
+                document.getElementById("codeModal").style.display = "block";
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelector('.tab-btn:first-child').classList.add('active');
+                currentTab = "code";
+            }
+        }
+
+        function runSolution(id) {
+            const ex = exercises.find(e => e.id === id);
+            if (ex) {
+                currentSolution = ex.solution;
+                document.getElementById("modalTitle").innerHTML = `▶️ ${ex.title} - Kết quả`;
+                document.getElementById("modalCode").style.display = "none";
+                const iframe = document.getElementById("resultFrame");
+                iframe.style.display = "block";
+                iframe.srcdoc = ex.solution;
+                document.getElementById("codeModal").style.display = "block";
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelector('.tab-btn:last-child').classList.add('active');
+                currentTab = "result";
+            }
+        }
+
+        function showCodeTab() {
+            document.getElementById("modalCode").style.display = "block";
+            document.getElementById("resultFrame").style.display = "none";
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.tab-btn:first-child').classList.add('active');
+        }
+
+        function showResultTab() {
+            document.getElementById("modalCode").style.display = "none";
+            document.getElementById("resultFrame").style.display = "block";
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.tab-btn:last-child').classList.add('active');
+        }
+
+        function copyCode() {
+            if (currentSolution) {
+                navigator.clipboard.writeText(currentSolution);
+                alert("✅ Đã sao chép code!");
+            }
+        }
+
+        function closeModal() {
+            document.getElementById("codeModal").style.display = "none";
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        function toggleTestSolution(num) {
+            const sol = document.getElementById(`testSolution${num}`);
+            sol.classList.toggle('show');
+        }
+
+        // Filter buttons
+        document.querySelectorAll(".filter-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                renderExercises(btn.dataset.filter);
+            });
+        });
+
+        renderExercises("all");
+
+        window.onclick = function(e) {
+            if (e.target === document.getElementById("codeModal")) closeModal();
+        };
+    </script>
+</body>
+</html>

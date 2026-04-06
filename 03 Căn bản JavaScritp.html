@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Thuyết Trình JavaScript - Học JS Toàn Diện</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: none;
+            padding: 0.5rem 0.8rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: #f39c12;
+            transition: all 0.3s;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: #f39c12;
+            color: white;
+        }
+
+        /* Slides */
+        .slides-container {
+            margin-top: 80px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 2rem;
+        }
+
+        .slide {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #f39c12;
+            margin-bottom: 1rem;
+            border-left: 5px solid #f39c12;
+            padding-left: 1rem;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: #e67e22;
+            margin: 1.5rem 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h3 {
+            color: #f39c12;
+            margin: 1rem 0;
+            font-size: 1.2rem;
+        }
+
+        .section-badge {
+            background: #f39c12;
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1rem;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-block .keyword {
+            color: #569cd6;
+        }
+        .code-block .string {
+            color: #ce9178;
+        }
+        .code-block .function {
+            color: #dcdcaa;
+        }
+        .code-block .comment {
+            color: #6a9955;
+        }
+
+        .demo-box {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            border: 1px solid #e9ecef;
+        }
+
+        /* Practice Questions */
+        .practice-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-left: 5px solid #f39c12;
+            padding: 1.5rem;
+            margin: 2rem 0 1rem 0;
+            border-radius: 10px;
+        }
+
+        .practice-section h3 {
+            color: #f39c12;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .question {
+            background: white;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .question:hover {
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .question p {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .answer-btn {
+            background: #f39c12;
+            color: white;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .answer-btn:hover {
+            background: #e67e22;
+            transform: translateY(-2px);
+        }
+
+        .answer {
+            display: none;
+            margin-top: 0.8rem;
+            padding: 0.8rem;
+            background: #fff3e0;
+            border-radius: 5px;
+            color: #2c3e50;
+            font-size: 0.9rem;
+            border-left: 3px solid #f39c12;
+        }
+
+        .answer.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Interactive Console */
+        .console-demo {
+            background: #1e1e1e;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .console-header {
+            background: #2d2d2d;
+            padding: 0.5rem 1rem;
+            color: white;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .console-output {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            min-height: 100px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .console-input-area {
+            display: flex;
+            border-top: 1px solid #3d3d3d;
+        }
+
+        .console-input-area input {
+            flex: 1;
+            background: #2d2d2d;
+            color: #d4d4d4;
+            border: none;
+            padding: 0.8rem;
+            font-family: 'Courier New', monospace;
+            outline: none;
+        }
+
+        .console-input-area button {
+            background: #f39c12;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Calculator Demo */
+        .calculator {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .calculator input {
+            width: 100%;
+            padding: 0.8rem;
+            font-size: 1.2rem;
+            text-align: right;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .calc-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+        }
+
+        .calc-buttons button {
+            padding: 0.8rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .calc-buttons button:hover {
+            transform: scale(1.02);
+        }
+
+        .calc-buttons .number {
+            background: #e9ecef;
+        }
+
+        .calc-buttons .operator {
+            background: #f39c12;
+            color: white;
+        }
+
+        .calc-buttons .equal {
+            background: #27ae60;
+            color: white;
+        }
+
+        .calc-buttons .clear {
+            background: #e74c3c;
+            color: white;
+        }
+
+        /* Todo List Demo */
+        .todo-demo {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .todo-input-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .todo-input-group input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .todo-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .todo-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .todo-list li:hover {
+            background: #e9ecef;
+        }
+
+        .todo-list .delete-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 0.2rem 0.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Color Changer Demo */
+        .color-changer {
+            text-align: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .color-box {
+            width: 100%;
+            height: 100px;
+            background: #f39c12;
+            border-radius: 10px;
+            margin: 1rem 0;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 1.6rem;
+            }
+            
+            h2 {
+                font-size: 1.3rem;
+            }
+            
+            .nav-container {
+                gap: 0.3rem;
+            }
+            
+            .nav-btn {
+                font-size: 0.65rem;
+                padding: 0.3rem 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <div class="nav-container">
+            <button class="nav-btn active" onclick="showSlide(0)">1. Giới thiệu</button>
+            <button class="nav-btn" onclick="showSlide(1)">2. Biến & Kiểu dữ liệu</button>
+            <button class="nav-btn" onclick="showSlide(2)">3. Toán tử & Câu lệnh</button>
+            <button class="nav-btn" onclick="showSlide(3)">4. Hàm & Vòng lặp</button>
+            <button class="nav-btn" onclick="showSlide(4)">5. DOM & Sự kiện</button>
+            <button class="nav-btn" onclick="showSlide(5)">6. Mảng & Object</button>
+            <button class="nav-btn" onclick="showSlide(6)">7. Xử lý bất đồng bộ</button>
+            <button class="nav-btn" onclick="showSlide(7)">8. ES6+ Hiện đại</button>
+            <button class="nav-btn" onclick="showSlide(8)">9. Demo & Bài tập</button>
+        </div>
+    </div>
+
+    <div class="slides-container">
+        <!-- Slide 1: Giới thiệu JavaScript -->
+        <div class="slide active" id="slide0">
+            <h1>💛 JavaScript - Ngôn ngữ lập trình của Web</h1>
+            
+            <div class="section-badge">📖 LÝ THUYẾT</div>
+            <p><strong>JavaScript là gì?</strong> Ngôn ngữ lập trình kịch bản, giúp trang web trở nên tương tác và động.</p>
+            
+            <h2>📌 Vai trò của JavaScript:</h2>
+            <ul style="margin-left: 2rem;">
+                <li>✓ Tạo hiệu ứng và tương tác động</li>
+                <li>✓ Xử lý sự kiện từ người dùng (click, nhập liệu...)</li>
+                <li>✓ Giao tiếp với máy chủ (AJAX, Fetch API)</li>
+                <li>✓ Thay đổi nội dung và cấu trúc HTML/CSS</li>
+            </ul>
+            
+            <div class="code-block">
+                <span class="comment">// Khai báo biến và in ra console</span><br>
+                let message = <span class="string">"Xin chào JavaScript!"</span>;<br>
+                console.log(message);<br><br>
+                
+                <span class="comment">// Tạo hàm xử lý sự kiện</span><br>
+                function showAlert() {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;alert(<span class="string">"Bạn đã click vào nút!"</span>);<br>
+                }
+            </div>
+            
+            <div class="section-badge">🎮 DEMO TƯƠNG TÁC</div>
+            <div class="demo-box" style="text-align: center;">
+                <h3>Chạy JavaScript ngay tại đây!</h3>
+                <button class="answer-btn" onclick="alert('🎉 Xin chào! JavaScript đang hoạt động!')">👉 Click để chạy JavaScript</button>
+                <p style="margin-top: 0.5rem;" id="demoMessage"></p>
+                <button class="answer-btn" onclick="document.getElementById('demoMessage').innerHTML = '✅ JavaScript đã thay đổi nội dung này!'">📝 Thay đổi nội dung</button>
+            </div>
+            
+            <div class="practice-section">
+                <h3>📝 BÀI TẬP THỰC HÀNH</h3>
+                <div class="question">
+                    <p><strong>Câu 1:</strong> JavaScript dùng để làm gì trong phát triển web?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">JavaScript tạo tương tác động, xử lý sự kiện, thay đổi nội dung HTML/CSS, và giao tiếp với máy chủ.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 2:</strong> Có mấy cách để nhúng JavaScript vào HTML?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">3 cách: Inline (trong thẻ), Internal (&lt;script&gt; trong HTML), External (file .js riêng).</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 3:</strong> console.log() dùng để làm gì?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">In thông tin ra console của trình duyệt, dùng để debug và kiểm tra.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 4:</strong> alert() có tác dụng gì?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Hiển thị hộp thoại thông báo cho người dùng.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 5:</strong> JavaScript có phân biệt chữ hoa chữ thường không?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Có, JavaScript là ngôn ngữ case-sensitive (phân biệt hoa/thường).</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Biến và Kiểu dữ liệu -->
+        <div class="slide" id="slide1">
+            <h1>📦 Biến và Kiểu dữ liệu trong JavaScript</h1>
+            
+            <div class="section-badge">📖 LÝ THUYẾT</div>
+            <div class="code-block">
+                <span class="comment">// Khai báo biến với let, const, var</span><br>
+                let name = <span class="string">"Nguyễn Văn A"</span>;  <span class="comment">// Có thể thay đổi</span><br>
+                const PI = 3.14;           <span class="comment">// Không thể thay đổi</span><br>
+                var oldWay = <span class="string">"cũ"</span>;      <span class="comment">// Không khuyến khích</span><br><br>
+                
+                <span class="comment">// Các kiểu dữ liệu cơ bản</span><br>
+                let age = 25;               <span class="comment">// number</span><br>
+                let isStudent = true;       <span class="comment">// boolean</span><br>
+                let city = <span class="string">"Hà Nội"</span>;        <span class="comment">// string</span><br>
+                let data = null;            <span class="comment">// null</span><br>
+                let notDefined;             <span class="comment">// undefined</span><br>
+                let person = { name: <span class="string">"A"</span>, age: 20 }; <span class="comment">// object</span><br>
+                let colors = [<span class="string">"red"</span>, <span class="string">"blue"</span>]; <span class="comment">// array</span>
+            </div>
+            
+            <div class="section-badge">🎮 DEMO TƯƠNG TÁC</div>
+            <div class="demo-box">
+                <h3>Kiểm tra kiểu dữ liệu:</h3>
+                <div class="console-demo">
+                    <div class="console-header">
+                        <span>📟 Console tương tác</span>
+                    </div>
+                    <div class="console-output" id="consoleOutput">
+                        > Nhập mã JavaScript để thử nghiệm...
+                    </div>
+                    <div class="console-input-area">
+                        <input type="text" id="jsInput" placeholder="Nhập JavaScript code (ví dụ: typeof 'hello')" onkeypress="if(event.key==='Enter') runJS()">
+                        <button onclick="runJS()">▶ Chạy</button>
+                    </div>
+                </div>
+                <div class="text-controls" style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button class="answer-btn" onclick="demoTypeof()">📊 typeof demo</button>
+                    <button class="answer-btn" onclick="demoVariables()">📝 Khai báo biến</button>
+                    <button class="answer-btn" onclick="clearConsole()">🗑️ Xóa console</button>
+                </div>
+            </div>
+            
+            <div class="practice-section">
+                <h3>📝 BÀI TẬP THỰC HÀNH</h3>
+                <div class="question">
+                    <p><strong>Câu 1:</strong> Sự khác nhau giữa let, const và var?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">let: khai báo biến có thể thay đổi, phạm vi block. const: hằng số không thể gán lại. var: phạm vi hàm, không khuyến khích dùng.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 2:</strong> Kiểu dữ liệu nào dùng để lưu trữ danh sách các giá trị?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Array (mảng) - ví dụ: let list = [1, 2, 3];</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 3:</strong> typeof null trả về kết quả gì? Tại sao?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">typeof null trả về "object" - đây là lỗi lịch sử của JavaScript.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 4:</strong> Làm thế nào để kiểm tra kiểu dữ liệu của một biến?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Sử dụng toán tử typeof: typeof variableName</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 5:</strong> Khai báo một hằng số và một biến có thể thay đổi.</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">const PI = 3.14; let count = 0;</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Toán tử và Câu lệnh điều kiện -->
+        <div class="slide" id="slide2">
+            <h1>⚙️ Toán tử và Câu lệnh điều kiện</h1>
+            
+            <div class="section-badge">📖 LÝ THUYẾT</div>
+            <div class="code-block">
+                <span class="comment">// Toán tử số học</span><br>
+                let sum = 10 + 5;     <span class="comment">// 15</span><br>
+                let product = 10 * 5; <span class="comment">// 50</span><br><br>
+                
+                <span class="comment">// Toán tử so sánh</span><br>
+                let isEqual = (5 == <span class="string">"5"</span>);   <span class="comment">// true (so sánh giá trị)</span><br>
+                let isStrict = (5 === <span class="string">"5"</span>); <span class="comment">// false (so sánh cả kiểu)</span><br><br>
+                
+                <span class="comment">// Câu lệnh if-else</span><br>
+                let age = 18;<br>
+                if (age >= 18) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;console.log(<span class="string">"Đủ tuổi"</span>);<br>
+                } else {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;console.log(<span class="string">"Chưa đủ tuổi"</span>);<br>
+                }<br><br>
+                
+                <span class="comment">// Switch case</span><br>
+                let day = 2;<br>
+                switch(day) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;case 2: console.log(<span class="string">"Thứ 2"</span>); break;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;default: console.log(<span class="string">"Ngày khác"</span>);<br>
+                }
+            </div>
+            
+            <div class="section-badge">🎮 DEMO TƯƠNG TÁC</div>
+            <div class="demo-box">
+                <h3>Kiểm tra tuổi:</h3>
+                <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                    <input type="number" id="ageInput" placeholder="Nhập tuổi của bạn" style="padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px;">
+                    <button class="answer-btn" onclick="checkAge()">Kiểm tra</button>
+                </div>
+                <p id="ageResult" style="margin-top: 1rem; padding: 0.5rem; background: #e9ecef; border-radius: 5px;"></p>
+                
+                <h3 style="margin-top: 1rem;">Máy tính đơn giản:</h3>
+                <div class="calculator">
+                    <input type="text" id="calcDisplay" readonly value="0">
+                    <div class="calc-buttons">
+                        <button class="number" onclick="calcAppend('7')">7</button>
+                        <button class="number" onclick="calcAppend('8')">8</button>
+                        <button class="number" onclick="calcAppend('9')">9</button>
+                        <button class="operator" onclick="calcAppend('/')">÷</button>
+                        <button class="number" onclick="calcAppend('4')">4</button>
+                        <button class="number" onclick="calcAppend('5')">5</button>
+                        <button class="number" onclick="calcAppend('6')">6</button>
+                        <button class="operator" onclick="calcAppend('*')">×</button>
+                        <button class="number" onclick="calcAppend('1')">1</button>
+                        <button class="number" onclick="calcAppend('2')">2</button>
+                        <button class="number" onclick="calcAppend('3')">3</button>
+                        <button class="operator" onclick="calcAppend('-')">-</button>
+                        <button class="number" onclick="calcAppend('0')">0</button>
+                        <button class="number" onclick="calcAppend('.')">.</button>
+                        <button class="equal" onclick="calcResult()">=</button>
+                        <button class="operator" onclick="calcAppend('+')">+</button>
+                        <button class="clear" onclick="calcClear()">C</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="practice-section">
+                <h3>📝 BÀI TẬP THỰC HÀNH</h3>
+                <div class="question">
+                    <p><strong>Câu 1:</strong> Sự khác nhau giữa == và === trong JavaScript?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">== so sánh giá trị sau khi ép kiểu, === so sánh cả giá trị và kiểu dữ liệu.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 2:</strong> Viết câu lệnh if-else để kiểm tra số dương, số âm, số 0.</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">if (num > 0) { console.log("Số dương"); } else if (num < 0) { console.log("Số âm"); } else { console.log("Số 0"); }</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 3:</strong> Toán tử ?: (ternary) dùng để làm gì?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Toán tử điều kiện rút gọn: condition ? valueIfTrue : valueIfFalse</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 4:</strong> Khi nào nên dùng switch thay vì if-else?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Khi cần so sánh một biến với nhiều giá trị cụ thể, switch giúp code rõ ràng hơn.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 5:</strong> Viết code kiểm tra một số có chia hết cho 3 và 5 không?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">if (num % 3 === 0 && num % 5 === 0) { console.log("Chia hết cho 3 và 5"); }</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Hàm và Vòng lặp -->
+        <div class="slide" id="slide3">
+            <h1>🔄 Hàm và Vòng lặp trong JavaScript</h1>
+            
+            <div class="section-badge">📖 LÝ THUYẾT</div>
+            <div class="code-block">
+                <span class="comment">// Khai báo hàm</span><br>
+                function greet(name) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;return <span class="string">`Xin chào, ${name}!`</span>;<br>
+                }<br><br>
+                
+                <span class="comment">// Function expression</span><br>
+                const sum = function(a, b) { return a + b; };<br><br>
+                
+                <span class="comment">// Arrow function (ES6)</span><br>
+                const multiply = (a, b) => a * b;<br><br>
+                
+                <span class="comment">// Vòng lặp for</span><br>
+                for (let i = 0; i < 5; i++) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;console.log(i);<br>
+                }<br><br>
+                
+                <span class="comment">// Vòng lặp while</span><br>
+                let count = 0;<br>
+                while (count < 3) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;console.log(count);<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;count++;<br>
+                }
+            </div>
+            
+            <div class="section-badge">🎮 DEMO TƯƠNG TÁC</div>
+            <div class="demo-box">
+                <h3>Demo đếm số:</h3>
+                <div style="text-align: center;">
+                    <p id="counterDisplay" style="font-size: 2rem; font-weight: bold;">0</p>
+                    <div style="display: flex; gap: 0.5rem; justify-content: center;">
+                        <button class="answer-btn" onclick="startCountUp()">⬆️ Đếm lên</button>
+                        <button class="answer-btn" onclick="startCountDown()">⬇️ Đếm xuống</button>
+                        <button class="answer-btn" onclick="stopCounting()">⏹️ Dừng</button>
+                    </div>
+                    <p id="loopResult" style="margin-top: 1rem; background: #e9ecef; padding: 0.5rem; border-radius: 5px;"></p>
+                </div>
+                
+                <h3 style="margin-top: 1rem;">Arrow Function Demo:</h3>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button class="answer-btn" onclick="demoArrow()">🏹 Chạy arrow function</button>
+                    <button class="answer-btn" onclick="demoCallback()">🔄 Callback function</button>
+                </div>
+                <p id="arrowResult" style="margin-top: 0.5rem;"></p>
+            </div>
+            
+            <div class="practice-section">
+                <h3>📝 BÀI TẬP THỰC HÀNH</h3>
+                <div class="question">
+                    <p><strong>Câu 1:</strong> Sự khác nhau giữa function declaration và function expression?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Function declaration được hoisting (có thể gọi trước khi khai báo), function expression thì không.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 2:</strong> Arrow function khác function thường ở điểm nào?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Arrow function ngắn gọn, không có this riêng, không thể dùng làm constructor.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 3:</strong> Viết vòng lặp for để in ra số từ 1 đến 10.</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">for (let i = 1; i <= 10; i++) { console.log(i); }</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 4:</strong> Khi nào nên dùng while thay vì for?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">While dùng khi không biết trước số lần lặp, for dùng khi biết trước số lần lặp.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 5:</strong> Viết hàm tính giai thừa của một số.</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">function factorial(n) { if (n <= 1) return 1; return n * factorial(n-1); }</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: DOM và Sự kiện -->
+        <div class="slide" id="slide4">
+            <h1>🖱️ DOM và Xử lý sự kiện</h1>
+            
+            <div class="section-badge">📖 LÝ THUYẾT</div>
+            <div class="code-block">
+                <span class="comment">// Truy cập phần tử</span><br>
+                document.getElementById(<span class="string">"myId"</span>);<br>
+                document.querySelector(<span class="string">".myClass"</span>);<br>
+                document.querySelectorAll(<span class="string">"p"</span>);<br><br>
+                
+                <span class="comment">// Thay đổi nội dung</span><br>
+                element.innerHTML = <span class="string">"Nội dung mới"</span>;<br>
+                element.textContent = <span class="string">"Văn bản"</span>;<br>
+                element.style.color = <span class="string">"red"</span>;<br><br>
+                
+                <span class="comment">// Xử lý sự kiện</span><br>
+                element.addEventListener(<span class="string">"click"</span>, function() {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;alert(<span class="string">"Đã click!"</span>);<br>
+                });
+            </div>
+            
+            <div class="section-badge">🎮 DEMO TƯƠNG TÁC</div>
+            <div class="demo-box">
+                <h3>Thay đổi nội dung và style:</h3>
+                <div id="domDemo" style="padding: 1rem; background: #f39c12; color: white; text-align: center; border-radius: 8px; transition: all 0.3s;">
+                    Di chuột vào đây hoặc click vào nút bên dưới
+                </div>
+                <div class="text-controls" style="margin-top: 1rem;">
+                    <button class="answer-btn" onclick="changeText()">📝 Đổi nội dung</button>
+                    <button class="answer-btn" onclick="changeColor()">🎨 Đổi màu</button>
+                    <button class="answer-btn" onclick="addBorder()">🔲 Thêm viền</button>
+                    <button class="answer-btn" onclick="resetDOM()">🔄 Reset</button>
+                </div>
+                
+                <h3 style="margin-top: 1rem;">Todo List (Thêm/xóa công việc):</h3>
+                <div class="todo-demo">
+                    <div class="todo-input-group">
+                        <input type="text" id="todoInput" placeholder="Nhập công việc mới..." onkeypress="if(event.key==='Enter') addTodo()">
+                        <button class="answer-btn" onclick="addTodo()">➕ Thêm</button>
+                    </div>
+                    <ul id="todoList" class="todo-list"></ul>
+                </div>
+            </div>
+            
+            <div class="practice-section">
+                <h3>📝 BÀI TẬP THỰC HÀNH</h3>
+                <div class="question">
+                    <p><strong>Câu 1:</strong> DOM là gì? Viết tắt của từ gì?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Document Object Model - mô hình đối tượng tài liệu, đại diện cho cấu trúc HTML.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 2:</strong> Sự khác nhau giữa innerHTML và textContent?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">innerHTML phân tích HTML, textContent chỉ lấy văn bản thuần.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 3:</strong> Làm thế nào để thêm sự kiện click cho một nút?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">element.addEventListener("click", function() { ... }); hoặc onclick attribute.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 4:</strong> querySelector và querySelectorAll khác nhau thế nào?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">querySelector trả về phần tử đầu tiên, querySelectorAll trả về NodeList chứa tất cả.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 5:</strong> Làm sao để tạo mới một phần tử HTML bằng JavaScript?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">document.createElement("div"); sau đó append vào DOM.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Mảng và Object -->
+        <div class="slide" id="slide5">
+            <h1>📊 Mảng và Object trong JavaScript</h1>
+            
+            <div class="section-badge">📖 LÝ THUYẾT</div>
+            <div class="code-block">
+                <span class="comment">// Khai báo mảng</span><br>
+                let fruits = [<span class="string">"Táo"</span>, <span class="string">"Cam"</span>, <span class="string">"Xoài"</span>];<br>
+                fruits.push(<span class="string">"Chuối"</span>);  <span class="comment">// Thêm cuối</span><br>
+                fruits.pop();             <span class="comment">// Xóa cuối</span><br>
+                fruits[0] = <span class="string">"Lê"</span>;      <span class="comment">// Truy cập</span><br><br>
+                
+                <span class="comment">// Các phương thức mảng</span><br>
+                fruits.forEach(fruit => console.log(fruit));<br>
+                let filtered = fruits.filter(f => f.length > 2);<br>
+                let mapped = fruits.map(f => f.toUpperCase());<br><br>
+                
+                <span class="comment">// Khai báo Object</span><br>
+                let student = {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;name: <span class="string">"Nguyễn Văn A"</span>,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;age: 20,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;greet: function() {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return <span class="string">`Xin chào, tôi là ${this.name}`</span>;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                };
+            </div>
+            
+            <div class="section-badge">🎮 DEMO TƯƠNG TÁC</div>
+            <div class="demo-box">
+                <h3>Quản lý danh sách sinh viên:</h3>
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                    <input type="text" id="studentName" placeholder="Tên sinh viên" style="padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px;">
+                    <input type="number" id="studentAge" placeholder="Tuổi" style="padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; width: 80px;">
+                    <button class="answer-btn" onclick="addStudent()">➕ Thêm</button>
+                    <button class="answer-btn" onclick="filterAdult()">🔍 Lọc tuổi >= 18</button>
+                    <button class="answer-btn" onclick="showStudentNames()">📝 Hiển thị tên</button>
+                </div>
+                <div id="studentList" style="background: #e9ecef; padding: 1rem; border-radius: 5px; max-height: 200px; overflow-y: auto;"></div>
+                
+                <h3 style="margin-top: 1rem;">Map và Filter Demo:</h3>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button class="answer-btn" onclick="demoMap()">🗺️ Map: nhân đôi số</button>
+                    <button class="answer-btn" onclick="demoFilter()">🔍 Filter: số chẵn</button>
+                    <button class="answer-btn" onclick="demoReduce()">📊 Reduce: tính tổng</button>
+                </div>
+                <p id="arrayResult" style="margin-top: 0.5rem; background: #e9ecef; padding: 0.5rem; border-radius: 5px;"></p>
+            </div>
+            
+            <div class="practice-section">
+                <h3>📝 BÀI TẬP THỰC HÀNH</h3>
+                <div class="question">
+                    <p><strong>Câu 1:</strong> Các phương thức map, filter, reduce dùng để làm gì?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">map: biến đổi mảng, filter: lọc phần tử, reduce: tính toán tích lũy.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 2:</strong> Làm thế nào để thêm phần tử vào đầu mảng?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">unshift() - ví dụ: arr.unshift("phần tử mới");</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 3:</strong> Sự khác nhau giữa Object và Array?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Array là danh sách có thứ tự, truy cập bằng chỉ số. Object là tập hợp key-value, truy cập bằng tên thuộc tính.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 4:</strong> Làm thế nào để duyệt qua các thuộc tính của Object?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">for...in, Object.keys(), Object.values(), Object.entries()</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 5:</strong> Viết code tạo mảng số từ 1-10, sau đó lọc ra số chẵn.</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">let arr = [1,2,3,4,5,6,7,8,9,10]; let evens = arr.filter(n => n % 2 === 0);</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Xử lý bất đồng bộ -->
+        <div class="slide" id="slide6">
+            <h1>⏳ Xử lý bất đồng bộ trong JavaScript</h1>
+            
+            <div class="section-badge">📖 LÝ THUYẾT</div>
+            <div class="code-block">
+                <span class="comment">// setTimeout - delay</span><br>
+                setTimeout(() => {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;console.log(<span class="string">"Chạy sau 2 giây"</span>);<br>
+                }, 2000);<br><br>
+                
+                <span class="comment">// Promise</span><br>
+                let promise = new Promise((resolve, reject) => {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;setTimeout(() => resolve(<span class="string">"Thành công!"</span>), 1000);<br>
+                });<br>
+                promise.then(result => console.log(result));<br><br>
+                
+                <span class="comment">// Async/Await (ES8)</span><br>
+                async function fetchData() {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;try {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let response = await fetch(<span class="string">'https://api.example.com'</span>);<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let data = await response.json();<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log(data);<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;} catch(error) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.error(error);<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                }
+            </div>
+            
+            <div class="section-badge">🎮 DEMO TƯƠNG TÁC</div>
+            <div class="demo-box">
+                <h3>Demo setTimeout và Promise:</h3>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button class="answer-btn" onclick="demoTimeout()">⏰ setTimeout 2 giây</button>
+                    <button class="answer-btn" onclick="demoPromise()">🤝 Promise demo</button>
+                    <button class="answer-btn" onclick="demoAsync()">⚡ Async/Await demo</button>
+                </div>
+                <div id="asyncResult" style="margin-top: 1rem; padding: 0.5rem; background: #e9ecef; border-radius: 5px; min-height: 60px;"></div>
+                
+                <h3 style="margin-top: 1rem;">Đồng hồ đếm ngược:</h3>
+                <div style="text-align: center;">
+                    <p id="timerDisplay" style="font-size: 3rem; font-weight: bold; color: #f39c12;">0</p>
+                    <div style="display: flex; gap: 0.5rem; justify-content: center;">
+                        <button class="answer-btn" onclick="startTimer()">▶️ Bắt đầu</button>
+                        <button class="answer-btn" onclick="stopTimer()">⏹️ Dừng</button>
+                        <button class="answer-btn" onclick="resetTimer()">🔄 Reset</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="practice-section">
+                <h3>📝 BÀI TẬP THỰC HÀNH</h3>
+                <div class="question">
+                    <p><strong>Câu 1:</strong> setTimeout và setInterval khác nhau thế nào?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">setTimeout chạy một lần sau thời gian delay, setInterval chạy lặp lại.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 2:</strong> Promise có những trạng thái nào?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">pending (chờ), fulfilled (thành công), rejected (thất bại).</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 3:</strong> Async/Await dùng để làm gì? Ưu điểm?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Viết code bất đồng bộ như đồng bộ, dễ đọc và xử lý lỗi với try-catch.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 4:</strong> Làm thế nào để xử lý lỗi trong Promise?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Dùng .catch() hoặc try-catch trong async/await.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 5:</strong> Viết code Promise chạy sau 3 giây và trả về "Hoàn thành".</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">new Promise(resolve => setTimeout(() => resolve("Hoàn thành"), 3000));</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: ES6+ Tính năng hiện đại -->
+        <div class="slide" id="slide7">
+            <h1>⚡ ES6+ - JavaScript Hiện đại</h1>
+            
+            <div class="section-badge">📖 LÝ THUYẾT</div>
+            <div class="code-block">
+                <span class="comment">// Destructuring</span><br>
+                let [a, b] = [10, 20];<br>
+                let {name, age} = {name: <span class="string">"A"</span>, age: 25};<br><br>
+                
+                <span class="comment">// Spread operator</span><br>
+                let arr1 = [1, 2, 3];<br>
+                let arr2 = [...arr1, 4, 5];<br>
+                let obj1 = {x: 1, y: 2};<br>
+                let obj2 = {...obj1, z: 3};<br><br>
+                
+                <span class="comment">// Template literals</span><br>
+                let message = <span class="string">`Xin chào ${name}, bạn ${age} tuổi`</span>;<br><br>
+                
+                <span class="comment">// Class</span><br>
+                class Person {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;constructor(name) { this.name = name; }<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;greet() { return <span class="string">`Hello ${this.name}`</span>; }<br>
+                }
+            </div>
+            
+            <div class="section-badge">🎮 DEMO TƯƠNG TÁC</div>
+            <div class="demo-box">
+                <h3>Demo Destructuring:</h3>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button class="answer-btn" onclick="demoDestructuring()">📦 Destructuring array</button>
+                    <button class="answer-btn" onclick="demoObjectDestructuring()">📦 Destructuring object</button>
+                </div>
+                <p id="destructResult" style="margin-top: 0.5rem; background: #e9ecef; padding: 0.5rem; border-radius: 5px;"></p>
+                
+                <h3>Demo Spread Operator:</h3>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button class="answer-btn" onclick="demoSpreadArray()">📋 Spread array</button>
+                    <button class="answer-btn" onclick="demoSpreadObject()">📋 Spread object</button>
+                </div>
+                <p id="spreadResult" style="margin-top: 0.5rem; background: #e9ecef; padding: 0.5rem; border-radius: 5px;"></p>
+                
+                <h3>Demo Class:</h3>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button class="answer-btn" onclick="demoClass()">🏫 Tạo đối tượng Person</button>
+                </div>
+                <p id="classResult" style="margin-top: 0.5rem; background: #e9ecef; padding: 0.5rem; border-radius: 5px;"></p>
+            </div>
+            
+            <div class="practice-section">
+                <h3>📝 BÀI TẬP THỰC HÀNH</h3>
+                <div class="question">
+                    <p><strong>Câu 1:</strong> Destructuring là gì? Viết ví dụ.</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Giải nén giá trị từ mảng/object: let [x, y] = [1, 2]; let {name} = {name: "A"};</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 2:</strong> Spread operator (...) dùng để làm gì?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Sao chép hoặc kết hợp mảng/object, chuyển đổi iterable thành danh sách.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 3:</strong> Template literals (``) có lợi ích gì?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Cho phép nhúng biến với ${}, viết đa dòng, không cần nối chuỗi.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 4:</strong> Class trong ES6 khác prototype như thế nào?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">Class là cú pháp mới dễ đọc hơn, vẫn hoạt động dựa trên prototype.</div>
+                </div>
+                <div class="question">
+                    <p><strong>Câu 5:</strong> Viết code sử dụng spread để gộp hai mảng [1,2] và [3,4].</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="answer">let merged = [...[1,2], ...[3,4]]; // [1,2,3,4]</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Demo tổng hợp và Bài tập cuối khóa -->
+        <div class="slide" id="slide8">
+            <h1>🚀 Demo tổng hợp & Bài tập cuối khóa</h1>
+            
+            <div class="section-badge">🎯 DỰ ÁN MẪU: Ứng dụng ghi chú</div>
+            <div class="demo-box">
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                    <input type="text" id="noteTitle" placeholder="Tiêu đề ghi chú" style="flex: 1; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px;">
+                    <textarea id="noteContent" rows="2" placeholder="Nội dung ghi chú" style="flex: 2; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px;"></textarea>
+                    <button class="answer-btn" onclick="addNote()">📝 Thêm ghi chú</button>
+                </div>
+                <div id="notesList" style="display: grid; gap: 1rem; max-height: 300px; overflow-y: auto;"></div>
+                <div class="text-controls" style="margin-top: 1rem;">
+                    <button class="answer-btn" onclick="saveNotesToStorage()">💾 Lưu vào LocalStorage</button>
+                    <button class="answer-btn" onclick="loadNotesFromStorage()">📂 Tải từ LocalStorage</button>
+                    <button class="answer-btn" onclick="clearAllNotes()">🗑️ Xóa tất cả</button>
+                </div>
+            </div>
+            
+            <div class="section-badge">🎨 Color Changer với LocalStorage</div>
+            <div class="demo-box">
+                <div class="color-changer">
+                    <div id="colorPreview" class="color-box" style="background: #f39c12;">
+                        Màu nền hiện tại
+                    </div>
+                    <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
+                        <button class="answer-btn" onclick="changeBackgroundColor('#f39c12')">🟠 Cam</button>
+                        <button class="answer-btn" onclick="changeBackgroundColor('#3498db')">🔵 Xanh</button>
+                        <button class="answer-btn" onclick="changeBackgroundColor('#2ecc71')">🟢 Xanh lá</button>
+                        <button class="answer-btn" onclick="changeBackgroundColor('#e74c3c')">🔴 Đỏ</button>
+                        <button class="answer-btn" onclick="saveColorToStorage()">💾 Lưu màu</button>
+                        <button class="answer-btn" onclick="loadColorFromStorage()">📂 Tải màu</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-badge">📚 TÀI LIỆU THAM KHẢO</div>
+            <ul style="margin-left: 2rem;">
+                <li><a href="https://developer.mozilla.org/vi/docs/Web/JavaScript" target="_blank">MDN Web Docs - JavaScript (Tiếng Việt)</a></li>
+                <li><a href="https://javascript.info/" target="_blank">The Modern JavaScript Tutorial</a></li>
+                <li><a href="https://www.w3schools.com/js/" target="_blank">W3Schools JavaScript Tutorial</a></li>
+                <li><a href="https://es6.io/" target="_blank">ES6 for Everyone</a></li>
+            </ul>
+            
+            <div class="practice-section">
+                <h3>🎯 THÁCH THỨC CUỐI KHÓA</h3>
+                <div class="question">
+                    <p><strong>Thử thách:</strong> Xây dựng một ứng dụng Quản lý công việc (Todo App) hoàn chỉnh với các tính năng:</p>
+                    <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                        <li>Thêm công việc mới</li>
+                        <li>Đánh dấu hoàn thành</li>
+                        <li>Xóa công việc</li>
+                        <li>Lọc công việc (Tất cả, Đã hoàn thành, Chưa hoàn thành)</li>
+                        <li>Lưu dữ liệu vào LocalStorage</li>
+                    </ul>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">💡 Gợi ý cấu trúc</button>
+                    <div class="answer">
+                        <strong>Gợi ý cấu trúc:</strong><br>
+                        - Mảng tasks lưu các object: { id, text, completed }<br>
+                        - Hàm renderTasks() hiển thị danh sách<br>
+                        - Hàm addTask(text) thêm task mới<br>
+                        - Hàm toggleTask(id) thay đổi trạng thái<br>
+                        - Hàm deleteTask(id) xóa task<br>
+                        - Hàm filterTasks(status) lọc theo trạng thái<br>
+                        - Sử dụng localStorage để lưu/đọc dữ liệu
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const navBtns = document.querySelectorAll('.nav-btn');
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+            
+            navBtns.forEach((btn, i) => {
+                if (i === index) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            currentSlide = index;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleAnswer(btn) {
+            const answer = btn.nextElementSibling;
+            answer.classList.toggle('show');
+        }
+
+        // Slide 2: Console demo
+        function runJS() {
+            const input = document.getElementById('jsInput').value;
+            const output = document.getElementById('consoleOutput');
+            try {
+                const result = eval(input);
+                output.innerHTML += `<div>> ${input}</div><div style="color: #ce9178;">← ${result}</div>`;
+            } catch(e) {
+                output.innerHTML += `<div>> ${input}</div><div style="color: #f48771;">← Error: ${e.message}</div>`;
+            }
+            output.scrollTop = output.scrollHeight;
+            document.getElementById('jsInput').value = '';
+        }
+        
+        function demoTypeof() {
+            const output = document.getElementById('consoleOutput');
+            output.innerHTML += `<div>> typeof "hello"</div><div style="color: #ce9178;">← "string"</div>`;
+            output.innerHTML += `<div>> typeof 42</div><div style="color: #ce9178;">← "number"</div>`;
+            output.innerHTML += `<div>> typeof true</div><div style="color: #ce9178;">← "boolean"</div>`;
+            output.innerHTML += `<div>> typeof null</div><div style="color: #ce9178;">← "object" (lỗi lịch sử)</div>`;
+        }
+        
+        function demoVariables() {
+            const output = document.getElementById('consoleOutput');
+            output.innerHTML += `<div>> let x = 10; const y = 20;</div><div style="color: #ce9178;">← x = 10, y = 20 (const không thể gán lại)</div>`;
+        }
+        
+        function clearConsole() {
+            document.getElementById('consoleOutput').innerHTML = '> Console đã được xóa...';
+        }
+        
+        // Slide 3: Age check
+        function checkAge() {
+            const age = document.getElementById('ageInput').value;
+            const result = document.getElementById('ageResult');
+            if (age >= 18) {
+                result.innerHTML = '✅ Bạn đủ tuổi! (' + age + ' tuổi)';
+                result.style.background = '#d4edda';
+            } else {
+                result.innerHTML = '❌ Bạn chưa đủ tuổi! (' + age + ' tuổi)';
+                result.style.background = '#f8d7da';
+            }
+        }
+        
+        // Calculator
+        let currentInput = '';
+        function calcAppend(value) {
+            currentInput += value;
+            document.getElementById('calcDisplay').value = currentInput;
+        }
+        function calcResult() {
+            try {
+                let expression = currentInput.replace('×', '*').replace('÷', '/');
+                let result = eval(expression);
+                document.getElementById('calcDisplay').value = result;
+                currentInput = result.toString();
+            } catch(e) {
+                document.getElementById('calcDisplay').value = 'Lỗi';
+                currentInput = '';
+            }
+        }
+        function calcClear() {
+            currentInput = '';
+            document.getElementById('calcDisplay').value = '0';
+        }
+        
+        // Slide 4: Counter and loops
+        let countInterval;
+        let currentCount = 0;
+        function startCountUp() {
+            stopCounting();
+            countInterval = setInterval(() => {
+                currentCount++;
+                document.getElementById('counterDisplay').innerText = currentCount;
+                document.getElementById('loopResult').innerHTML = `Đang đếm lên: ${currentCount}`;
+            }, 500);
+        }
+        function startCountDown() {
+            stopCounting();
+            countInterval = setInterval(() => {
+                currentCount--;
+                document.getElementById('counterDisplay').innerText = currentCount;
+                document.getElementById('loopResult').innerHTML = `Đang đếm xuống: ${currentCount}`;
+            }, 500);
+        }
+        function stopCounting() {
+            if (countInterval) clearInterval(countInterval);
+        }
+        function demoArrow() {
+            const multiply = (a, b) => a * b;
+            document.getElementById('arrowResult').innerHTML = `Arrow function: multiply(5, 3) = ${multiply(5, 3)}`;
+        }
+        function demoCallback() {
+            const numbers = [1, 2, 3, 4, 5];
+            const doubled = numbers.map(n => n * 2);
+            document.getElementById('arrowResult').innerHTML = `Callback map: [${numbers}] → [${doubled}]`;
+        }
+        
+        // Slide 5: DOM manipulation
+        function changeText() {
+            document.getElementById('domDemo').innerHTML = 'Nội dung đã được thay đổi bằng JavaScript!';
+        }
+        function changeColor() {
+            document.getElementById('domDemo').style.background = '#27ae60';
+        }
+        function addBorder() {
+            document.getElementById('domDemo').style.border = '3px solid #fff';
+        }
+        function resetDOM() {
+            const dom = document.getElementById('domDemo');
+            dom.innerHTML = 'Di chuột vào đây hoặc click vào nút bên dưới';
+            dom.style.background = '#f39c12';
+            dom.style.border = 'none';
+        }
+        
+        // Todo list
+        let todos = [];
+        function addTodo() {
+            const input = document.getElementById('todoInput');
+            if (input.value.trim()) {
+                todos.push(input.value);
+                renderTodoList();
+                input.value = '';
+            }
+        }
+        function renderTodoList() {
+            const list = document.getElementById('todoList');
+            list.innerHTML = '';
+            todos.forEach((todo, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `<span>${todo}</span><button class="delete-btn" onclick="deleteTodo(${index})">Xóa</button>`;
+                list.appendChild(li);
+            });
+        }
+        function deleteTodo(index) {
+            todos.splice(index, 1);
+            renderTodoList();
+        }
+        
+        // Slide 6: Arrays and Objects
+        let students = [];
+        function addStudent() {
+            const name = document.getElementById('studentName').value;
+            const age = parseInt(document.getElementById('studentAge').value);
+            if (name && age) {
+                students.push({ name, age });
+                renderStudentList();
+                document.getElementById('studentName').value = '';
+                document.getElementById('studentAge').value = '';
+            }
+        }
+        function renderStudentList() {
+            const list = document.getElementById('studentList');
+            list.innerHTML = students.map(s => `<div>📘 ${s.name} - ${s.age} tuổi</div>`).join('');
+        }
+        function filterAdult() {
+            const adults = students.filter(s => s.age >= 18);
+            document.getElementById('studentList').innerHTML = adults.map(s => `<div>✅ ${s.name} - ${s.age} tuổi</div>`).join('');
+        }
+        function showStudentNames() {
+            const names = students.map(s => s.name).join(', ');
+            document.getElementById('studentList').innerHTML = `<div>📝 Danh sách tên: ${names || 'Chưa có sinh viên'}</div>`;
+        }
+        function demoMap() {
+            const numbers = [1, 2, 3, 4, 5];
+            const doubled = numbers.map(n => n * 2);
+            document.getElementById('arrayResult').innerHTML = `Map: [${numbers}] → [${doubled}]`;
+        }
+        function demoFilter() {
+            const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+            const evens = numbers.filter(n => n % 2 === 0);
+            document.getElementById('arrayResult').innerHTML = `Filter: [${numbers}] → số chẵn: [${evens}]`;
+        }
+        function demoReduce() {
+            const numbers = [1, 2, 3, 4, 5];
+            const sum = numbers.reduce((acc, n) => acc + n, 0);
+            document.getElementById('arrayResult').innerHTML = `Reduce: [${numbers}] → Tổng = ${sum}`;
+        }
+        
+        // Slide 7: Async
+        let timerInterval;
+        let timerValue = 0;
+        function demoTimeout() {
+            document.getElementById('asyncResult').innerHTML = '⏰ Bắt đầu đếm 2 giây...';
+            setTimeout(() => {
+                document.getElementById('asyncResult').innerHTML = '✅ 2 giây đã trôi qua!';
+            }, 2000);
+        }
+        function demoPromise() {
+            document.getElementById('asyncResult').innerHTML = '🤝 Promise đang chạy...';
+            const promise = new Promise((resolve) => {
+                setTimeout(() => resolve('Promise hoàn thành sau 2 giây!'), 2000);
+            });
+            promise.then(result => {
+                document.getElementById('asyncResult').innerHTML = `✅ ${result}`;
+            });
+        }
+        async function demoAsync() {
+            document.getElementById('asyncResult').innerHTML = '⚡ Async function đang chạy...';
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            document.getElementById('asyncResult').innerHTML = '✅ Async function hoàn thành sau 2 giây!';
+        }
+        function startTimer() {
+            stopTimer();
+            timerInterval = setInterval(() => {
+                timerValue++;
+                document.getElementById('timerDisplay').innerText = timerValue;
+            }, 1000);
+        }
+        function stopTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+        }
+        function resetTimer() {
+            stopTimer();
+            timerValue = 0;
+            document.getElementById('timerDisplay').innerText = '0';
+        }
+        
+        // Slide 8: ES6 Demos
+        function demoDestructuring() {
+            const arr = [10, 20, 30];
+            const [a, b, c] = arr;
+            document.getElementById('destructResult').innerHTML = `Array: [${arr}] → a=${a}, b=${b}, c=${c}`;
+        }
+        function demoObjectDestructuring() {
+            const person = { name: 'Nguyễn Văn A', age: 25, city: 'Hà Nội' };
+            const { name, age } = person;
+            document.getElementById('destructResult').innerHTML = `Object: ${JSON.stringify(person)} → name=${name}, age=${age}`;
+        }
+        function demoSpreadArray() {
+            const arr1 = [1, 2, 3];
+            const arr2 = [4, 5, 6];
+            const merged = [...arr1, ...arr2];
+            document.getElementById('spreadResult').innerHTML = `Spread: [${arr1}] + [${arr2}] = [${merged}]`;
+        }
+        function demoSpreadObject() {
+            const obj1 = { a: 1, b: 2 };
+            const obj2 = { c: 3, d: 4 };
+            const merged = { ...obj1, ...obj2 };
+            document.getElementById('spreadResult').innerHTML = `Spread object: ${JSON.stringify(obj1)} + ${JSON.stringify(obj2)} = ${JSON.stringify(merged)}`;
+        }
+        function demoClass() {
+            class Animal {
+                constructor(name) {
+                    this.name = name;
+                }
+                speak() {
+                    return `${this.name} kêu!`;
+                }
+            }
+            const dog = new Animal('Chó');
+            document.getElementById('classResult').innerHTML = `Class: ${dog.speak()}`;
+        }
+        
+        // Slide 9: Notes app
+        let notes = [];
+        function addNote() {
+            const title = document.getElementById('noteTitle').value;
+            const content = document.getElementById('noteContent').value;
+            if (title) {
+                notes.push({ id: Date.now(), title, content, date: new Date().toLocaleString() });
+                renderNotes();
+                document.getElementById('noteTitle').value = '';
+                document.getElementById('noteContent').value = '';
+            }
+        }
+        function renderNotes() {
+            const container = document.getElementById('notesList');
+            container.innerHTML = notes.map(note => `
+                <div style="background: #e9ecef; padding: 0.8rem; border-radius: 8px;">
+                    <h4 style="margin: 0 0 0.3rem 0; color: #f39c12;">📌 ${note.title}</h4>
+                    <p style="margin: 0 0 0.3rem 0;">${note.content || 'Không có nội dung'}</p>
+                    <small style="color: #666;">${note.date}</small>
+                    <button class="delete-btn" style="margin-left: 0.5rem;" onclick="deleteNote(${note.id})">Xóa</button>
+                </div>
+            `).join('');
+        }
+        function deleteNote(id) {
+            notes = notes.filter(n => n.id !== id);
+            renderNotes();
+        }
+        function saveNotesToStorage() {
+            localStorage.setItem('notes', JSON.stringify(notes));
+            alert('Đã lưu ghi chú vào LocalStorage!');
+        }
+        function loadNotesFromStorage() {
+            const saved = localStorage.getItem('notes');
+            if (saved) {
+                notes = JSON.parse(saved);
+                renderNotes();
+                alert('Đã tải ghi chú từ LocalStorage!');
+            } else {
+                alert('Không có dữ liệu đã lưu!');
+            }
+        }
+        function clearAllNotes() {
+            notes = [];
+            renderNotes();
+            localStorage.removeItem('notes');
+        }
+        
+        // Color changer
+        function changeBackgroundColor(color) {
+            document.getElementById('colorPreview').style.background = color;
+        }
+        function saveColorToStorage() {
+            const color = document.getElementById('colorPreview').style.background;
+            localStorage.setItem('bgColor', color);
+            alert('Đã lưu màu nền!');
+        }
+        function loadColorFromStorage() {
+            const color = localStorage.getItem('bgColor');
+            if (color) {
+                document.getElementById('colorPreview').style.background = color;
+                alert('Đã tải màu đã lưu!');
+            } else {
+                alert('Chưa có màu nào được lưu!');
+            }
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            } else if (e.key === 'ArrowRight' && currentSlide < slides.length - 1) {
+                showSlide(currentSlide + 1);
+            }
+        });
+    </script>
+</body>
+</html>
